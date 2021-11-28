@@ -1,11 +1,9 @@
-{
-    const { initialise } = require('./cms/config');
-    const validator = require('./validator');
-    const store = require('./store');
+import { initialise } from "./cms/config";
+import * as validator from "./validator";
+import * as store from "./store";
 
-    module.exports = {
-        initialise,
-        validator,
-        store
-    };
-}
+export {
+    initialise,
+    validator,
+    store
+};

@@ -1,16 +1,14 @@
-{
-    var cmsConfig: initConfig;
+var cmsConfig: core_initConfig;
 
-    const initialise = (config: initConfig) => {
-        cmsConfig = config;
-    }
-
-    const getConfig = () => {
-        return cmsConfig
-    }
-
-    module.exports = {
-        initialise,
-        getConfig
-    };
+const initialise = (config: core_initConfig) => {
+    cmsConfig = config;
 }
+
+const getConfig = () => {
+    return cmsConfig
+}
+
+export {
+    initialise,
+    getConfig
+};

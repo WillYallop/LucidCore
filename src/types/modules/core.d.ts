@@ -1,5 +1,7 @@
-interface initConfig {
+// Key: core_
+
+declare interface core_initConfig {
     directories: {
-        theme: string
+        readonly theme: string
     }
 }
