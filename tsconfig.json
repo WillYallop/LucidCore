@@ -4,17 +4,17 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
     "moduleResolution": "node",
     "outDir": "./dist",
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": [
-      "./types"
+      ".src/types/**/*",
+      "./node_modules/@types",
     ],
     "target": "es6"
   },
-  "include": ["src/**/**/*"],
+  "include": ["src/**/*.ts"],
   "exclude": [
     "node_modules"
   ]
