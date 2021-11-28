@@ -1,6 +1,6 @@
 var cmsConfig: core_initConfig;
 
-const initialise = (config: core_initConfig) => {
+const setConfig = (config: core_initConfig) => {
     cmsConfig = config;
 }
 
@@ -9,6 +9,6 @@ const getConfig = () => {
 }
 
 export {
-    initialise,
+    setConfig,
     getConfig
 };
