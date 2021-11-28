@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": [
+      "./types"
+    ],
+    "target": "es6"
+  },
+  "include": ["src/**/**/*"],
+  "exclude": [
+    "node_modules"
+  ]
+}
