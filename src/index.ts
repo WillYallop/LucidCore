@@ -1,5 +1,5 @@
 import { setConfig } from "./cms/config";
-import * as validator from "./validator";
+import validate from "./validator";
 import * as store from "./store";
 
 const initialise = async (config: core_initConfig) => {
@@ -12,6 +12,9 @@ const initialise = async (config: core_initConfig) => {
 
 export {
     initialise,
-    validator,
+    validate,
     store
 };
+
+// willPress.store.componentController.saveSingle();
+// willPress.store.resetAll()
