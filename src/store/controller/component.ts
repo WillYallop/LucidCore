@@ -1,3 +1,8 @@
+
+import { getSingleFileContent } from './theme'
+
+
+
 const deleteSingle = async (test: string): Promise<string> => {
     return 'hello'
 }
@@ -6,8 +11,13 @@ const updateSingle = async () => {
 
 }
 
-const saveSingle = async () => {
-
+// ------------------------------------ ------------------------------------
+// register a new component
+// ------------------------------------ ------------------------------------
+const saveSingle = async (data: stor_comp_saveSingleData) => {
+    // Validate the data
+    let componentData = await getSingleFileContent('/components.json', 'json');
+    
 }
 
 export {

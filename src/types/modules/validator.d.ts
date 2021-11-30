@@ -1,6 +1,5 @@
 // Key: vali_
 
-
 // Interfaces
 interface vali_validateFieldResponse {
     valid: boolean

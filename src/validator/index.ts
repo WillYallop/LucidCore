@@ -1,5 +1,5 @@
 // Methods
-import verifyFileExists from "./verify-file";
+import { verifyFileExists } from "../store/controller/theme";
 import validatorConfig from './validator-config';
 
 // Handle passing of field data to correct method validator
@@ -38,7 +38,7 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
         }
         // Components - Theme
         case 'comp_verifyFileExists': {
-            let res = await verifyFileExists('theme', `/components/${field.value}`);
+            let res = await verifyFileExists(`/components/${field.value}`);
             fieldResponse.valid = res;
             if(!res) fieldResponse.errors.push({
                 code: 404,
