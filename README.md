@@ -12,6 +12,7 @@ This CMS Core is tightly coupled to the CMS, and does not contain features such 
 - [Media Optimiser](#media-optimiser)
 
 ## Static Site Generator
+WillPress uses the twig template engine to create generate dynamic and flexible markup. 
 
 ## Store
 
