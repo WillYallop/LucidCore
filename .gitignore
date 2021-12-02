@@ -3,4 +3,4 @@ node_modules
 dist
 src/test.ts
 theme
-cms.config.js
+cms.config.ts
