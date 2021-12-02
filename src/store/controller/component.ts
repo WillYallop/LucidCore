@@ -88,7 +88,8 @@ const saveSingle = async (data: stor_comp_saveSingleData) => {
     else {
         return {
             saved: false,
-            field_errors: verifyData.fields
+            field_errors: verifyData.fields,
+            component: {}
         }
     }
 }

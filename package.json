@@ -5,15 +5,19 @@
   "main": "src/index.ts",
   "types": "src/types/main.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "jest --verbose ./tests --colors --coverage"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
+    "@types/jest": "^27.0.3",
     "@types/node": "^16.11.10",
     "@types/uuid": "^8.3.3",
     "fs-extra": "^10.0.0",
+    "jest": "^27.4.3",
+    "ts-jest": "^27.0.7",
     "typescript": "^4.5.2",
     "uuid": "^8.3.2"
   }
