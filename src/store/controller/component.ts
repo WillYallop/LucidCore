@@ -16,8 +16,10 @@ const __saveComponentHandler = async (componentsObj: Array<mod_componentModel>, 
         let newCompObj: mod_componentModel = {...componentsObj[compIndex], ...component};
         componentsObj[compIndex] = newCompObj;
         let response = await writeSingleFile('/components.json', 'json', componentsObj);
+        console.log('UPDATED');
         return {
             saved: response,
+            updated: true,
             component: componentsObj[compIndex]
         }
     } 
@@ -25,8 +27,10 @@ const __saveComponentHandler = async (componentsObj: Array<mod_componentModel>, 
         // Add to array and save
         componentsObj.push(component);
         let response = await writeSingleFile('/components.json', 'json', componentsObj);
+        console.log('ADDED');
         return {
             saved: response,
+            updated: false,
             component: component
         }
     }
@@ -45,9 +49,10 @@ const updateSingle = async () => {
 // ------------------------------------ ------------------------------------
 // register a new component
 // ------------------------------------ ------------------------------------
+// Will handle saving a new component 
+// This should be used to update a component - if one exists already for that component file it will update it inproperly - use the updateSingle instead.
 const saveSingle = async (data: stor_comp_saveSingleData) => {
     // Validate the data
-   
     let verifyData = await validate([
         {
             method: 'comp_name',
@@ -62,7 +67,6 @@ const saveSingle = async (data: stor_comp_saveSingleData) => {
             value: data.file_name
         }
     ]);
-
     // Validate input data
     if(verifyData.valid) {
         // theme/components.json
@@ -79,10 +83,7 @@ const saveSingle = async (data: stor_comp_saveSingleData) => {
             fields: []
         }
         let componentRes = await __saveComponentHandler(componentData, componentObj);
-        return {
-            saved: componentRes.saved,
-            component: componentRes.component
-        }
+        return componentRes
     }
     else {
         return {
