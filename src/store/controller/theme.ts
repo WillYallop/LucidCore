@@ -5,7 +5,6 @@ const config = require(path.resolve("./cms.config.ts"));
 const themeDir = config.directories.theme;
 
 
-
 // ------------------------------------ ------------------------------------
 //  Write to file
 // ------------------------------------ ------------------------------------
@@ -22,7 +21,6 @@ const writeSingleFile = async (target: string, type: 'json', data: any) => {
         return false
     }
 }
-
 
 // ------------------------------------ ------------------------------------
 //  Get single file content
