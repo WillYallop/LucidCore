@@ -1,4 +1,3 @@
-import { getConfig } from "../cms/config";
 import fse from 'fs-extra';
 
 const path = require('path');
@@ -6,7 +5,6 @@ const themeDirectory = path.resolve(__dirname, '../../theme');
 
 
 const test = async () => {
-    console.log('Config: ', getConfig());
     try {
         // Grab names of all templates in theme/templates directory
         let fileNames: Array<string> = [];
