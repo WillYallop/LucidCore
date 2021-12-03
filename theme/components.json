@@ -1,1 +1,12 @@
-[{"id":"056de110-5440-11ec-8076-a9f2329203e5","file_name":"test.twig","name":"test","description":"This is a test component!","preview_url":"","date_added":"Fri Dec 03 2021 13:50:48 GMT+0000 (Greenwich Mean Time)","date_modified":"Fri Dec 03 2021 13:50:48 GMT+0000 (Greenwich Mean Time)","fields":[]}]
+[
+  {
+    "id": "b8500aa0-5446-11ec-8825-8fdd7907e409",
+    "file_name": "test.twig",
+    "name": "test",
+    "description": "This is a test component!",
+    "preview_url": "",
+    "date_added": "Fri Dec 03 2021 14:38:45 GMT+0000 (Greenwich Mean Time)",
+    "date_modified": "Fri Dec 03 2021 14:38:45 GMT+0000 (Greenwich Mean Time)",
+    "fields": []
+  }
+]

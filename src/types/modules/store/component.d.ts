@@ -1,5 +1,12 @@
 // Key: stor_
 
+// deleteSingle()
+interface stor_comp_deleteSingleRes {
+    deleted: boolean
+    errors?: Array<core_errorMsg>
+    fields?: Array<vali_validateFieldResponse>
+}
+
 // saveSingle()
 interface stor_comp_saveSingleInp {
     name: string
@@ -10,7 +17,7 @@ interface stor_comp_saveSingleInp {
 interface stor_comp_saveSingleRes {
     saved: boolean,
     updated: boolean,
-    field_errors?: Array<vali_validateFieldResponse>
+    fields?: Array<vali_validateFieldResponse>
     component?: mod_componentModel
     errors?: Array<core_errorMsg>
 }
@@ -25,7 +32,7 @@ interface stor_comp_updateSingleInp {
 }
 interface stor_comp_updateSingleRes {
     updated: boolean
-    field_errors?: Array<vali_validateFieldResponse>
+    fields?: Array<vali_validateFieldResponse>
     component?: mod_componentModel
     errors?: Array<core_errorMsg>
 }
