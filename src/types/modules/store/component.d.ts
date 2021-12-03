@@ -16,7 +16,6 @@ interface stor_comp_saveSingleInp {
 }
 interface stor_comp_saveSingleRes {
     saved: boolean,
-    updated: boolean,
     fields?: Array<vali_validateFieldResponse>
     component?: mod_componentModel
     errors?: Array<core_errorMsg>
@@ -35,4 +34,11 @@ interface stor_comp_updateSingleRes {
     fields?: Array<vali_validateFieldResponse>
     component?: mod_componentModel
     errors?: Array<core_errorMsg>
+}
+
+// Internal
+interface stor_comp_saveComponentHandlerRes {
+    updated: boolean
+    saved: boolean
+    component: mod_componentModel
 }

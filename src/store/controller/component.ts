@@ -7,19 +7,28 @@ import { v1 as uuidv1 } from 'uuid';
 // Handles adding a new component or updating one to the compononts.json array, making sure duplicates dont exists
 // Then saving the component and returning the component
 // Can be updated to handle many if needed in the future
-const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>, component: mod_componentModel) => {
+const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>, component: mod_componentModel, update: boolean): Promise<stor_comp_saveComponentHandlerRes> => {
     // Check if the component exists
     let compIndex = componentsArray.findIndex( x => x.file_name === component.file_name);
     if(compIndex != -1) {
-        // Update object and save
-        let newCompObj: mod_componentModel = {...componentsArray[compIndex], ...component};
-        componentsArray[compIndex] = newCompObj;
-        let response = await writeSingleFile('/components.json', 'json', componentsArray);
-        console.log('UPDATED');
-        return {
-            saved: response,
-            updated: true,
-            component: componentsArray[compIndex]
+        if(update) {
+            // Update object and save
+            let newCompObj: mod_componentModel = {...componentsArray[compIndex], ...component};
+            componentsArray[compIndex] = newCompObj;
+            let response = await writeSingleFile('/components.json', 'json', componentsArray);
+            console.log('UPDATED');
+            return {
+                saved: response,
+                updated: true,
+                component: componentsArray[compIndex]
+            }
+        }
+        else {
+            return {
+                saved: false,
+                updated: false,
+                component: component
+            }
         }
     } 
     else {
@@ -125,7 +134,7 @@ const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promis
             let findComp = componentData.findIndex( x => x.id === id );
             if(findComp != -1) {
                 // Update
-                let componentRes = await __saveComponentHandler(componentData, data);
+                let componentRes = await __saveComponentHandler(componentData, data, true);
                 return {
                     updated: componentRes.updated,
                     component: componentRes.component
@@ -205,13 +214,12 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
                 date_modified: new Date().toString(),
                 fields: []
             }
-            let componentRes = await __saveComponentHandler(componentData, componentObj);
+            let componentRes = await __saveComponentHandler(componentData, componentObj, false);
             return componentRes
         }
         else {
             return {
                 saved: false,
-                updated: false,
                 errors: [
                     {
                         code: 403,
@@ -227,7 +235,6 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
     else {
         return {
             saved: false,
-            updated: false,
             fields: verifyData.fields,
         }
     }
