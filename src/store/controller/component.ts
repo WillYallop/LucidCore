@@ -1,8 +1,7 @@
 
 import { getSingleFileContent, writeSingleFile } from './theme'
 import validate from '../../validator';
-const { v4: uuidv4 } = require('uuid');
-
+import { v1 as uuidv1 } from 'uuid';
 
 // INTERNAL
 // Handles adding a new component or updating one to the compononts.json array, making sure duplicates dont exists
@@ -38,7 +37,7 @@ const __saveComponentHandler = async (componentsObj: Array<mod_componentModel>, 
 
 // EXTERNAL
 
-const deleteSingle = async (test: string): Promise<string> => {
+const deleteSingle = async (id: string): Promise<string> => {
     return 'hello'
 }
 
@@ -138,7 +137,7 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
         let componentData = await getSingleFileContent('/components.json', 'json');
         // Base component object
         let componentObj: mod_componentModel = {
-            id: uuidv4(),
+            id: uuidv1(),
             file_name: data.file_name,
             name: data.name,
             description: data.description,
