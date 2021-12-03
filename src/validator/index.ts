@@ -1,6 +1,8 @@
 // Methods
 import { verifyFileExists } from "../store/controller/theme";
 import validatorConfig from './validator-config';
+import { version as uuidVersion } from 'uuid';
+import { validate as uuidValidate } from 'uuid';
 
 // Handle passing of field data to correct method validator
 const validateField = async (field: vali_validateFieldObj): Promise<vali_validateFieldResponse> => {
@@ -49,6 +51,18 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                     message: `Component with file name: "${field.value}" could not be found in the theme components directory!`
                 });
                 break;
+            }
+            // Alt
+            case 'uuidVerify': {
+                let res = uuidValidate(field.value) && uuidVersion(field.value) === 1;
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 404,
+                    origin: 'validateField',
+                    title: 'uuid Not Valid',
+                    message: `uuid: "${field.value}" is not a valid ID.`
+                });
+                break;  
             }
         }
     } else {
