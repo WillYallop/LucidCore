@@ -42,8 +42,73 @@ const deleteSingle = async (test: string): Promise<string> => {
     return 'hello'
 }
 
-const updateSingle = async () => {
-
+// ------------------------------------ ------------------------------------
+// update single component
+// ------------------------------------ ------------------------------------
+// Handles updating a component, all fields must pass validation first, can pass any amount of value to update
+// TO DO - add validation to the preview_url and fields paramaters
+const updateSingle = async (data: stor_comp_updateSingleInp): Promise<stor_comp_updateSingleRes> => {
+    if(Object.entries(data).length) {
+        let validateObj: Array<vali_validateFieldObj> = [];
+        // Build out the validate object
+        for (const [key, value] of Object.entries(data)) {
+            switch(key) {
+                case 'name': {
+                    validateObj.push({
+                        method: 'comp_name',
+                        value: value
+                    });
+                    break;
+                }
+                case 'description': {
+                    validateObj.push({
+                        method: 'comp_description',
+                        value: value
+                    });
+                    break;
+                }
+                case 'file_name': {
+                    validateObj.push(        {
+                        method: 'comp_verifyFileExists',
+                        value: value
+                    });
+                    break;
+                }
+            }
+        }
+        // Validate
+        let verifyData = await validate(validateObj);
+        // Update data
+        if(verifyData.valid) {
+            // theme/components.json
+            let componentData = await getSingleFileContent('/components.json', 'json');
+            // Update
+            let componentRes = await __saveComponentHandler(componentData, data);
+            return {
+                updated: componentRes.updated,
+                component: componentRes.component
+            }
+        }
+        else {
+            return {
+                updated: false,
+                field_errors: verifyData.fields,
+            }
+        }
+    }
+    else {
+        return {
+            updated: false,
+            errors: [
+                {
+                    code: 403,
+                    origin: 'updateSingle',
+                    title: 'No Paramaters',
+                    message: 'No paramaters passed to componentController.updateSingle() function!'
+                }
+            ]
+        }
+    }
 }
 
 // ------------------------------------ ------------------------------------
@@ -51,7 +116,7 @@ const updateSingle = async () => {
 // ------------------------------------ ------------------------------------
 // Will handle saving a new component 
 // This should be used to update a component - if one exists already for that component file it will update it inproperly - use the updateSingle instead.
-const saveSingle = async (data: stor_comp_saveSingleData) => {
+const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_saveSingleRes> => {
     // Validate the data
     let verifyData = await validate([
         {
@@ -88,8 +153,8 @@ const saveSingle = async (data: stor_comp_saveSingleData) => {
     else {
         return {
             saved: false,
+            updated: false,
             field_errors: verifyData.fields,
-            component: {}
         }
     }
 }
