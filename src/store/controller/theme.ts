@@ -4,11 +4,10 @@ const path = require('path');
 const config = require(path.resolve("./cms.config.ts"));
 const themeDir = config.directories.theme;
 
-
 // ------------------------------------ ------------------------------------
 //  Write to file
 // ------------------------------------ ------------------------------------
-const writeSingleFile = async (target: string, type: 'json', data: any) => {
+const writeSingleFile = async (target: string, type: 'json', data: any): Promise<boolean> => {
     const directory = path.resolve(themeDir + target);
     try {
         if(type === 'json') {
@@ -20,6 +19,7 @@ const writeSingleFile = async (target: string, type: 'json', data: any) => {
     catch {
         return false
     }
+    return false
 }
 
 // ------------------------------------ ------------------------------------
