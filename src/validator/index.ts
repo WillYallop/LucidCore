@@ -10,45 +10,57 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
         method: field.method,
         errors: []
     }
-    switch(field.method) {
-        // Components
-        case 'comp_name': {
-            let regex = new RegExp(validatorConfig.comp_name);
-            let res = regex.test(field.value);
-            fieldResponse.valid = res;
-            if(!res) fieldResponse.errors.push({
-                code: 403,
-                origin: 'validateField',
-                title: 'Doesnt Match Regex',
-                message: `Component name: "${field.value}" does not meet the criteria.`
-            });
-            break;
+
+    if(field.value != undefined) {
+        switch(field.method) {
+            // Components
+            case 'comp_name': {
+                let regex = new RegExp(validatorConfig.comp_name);
+                let res = regex.test(field.value);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 403,
+                    origin: 'validateField',
+                    title: 'Doesnt Match Regex',
+                    message: `Component name: "${field.value}" does not meet the criteria.`
+                });
+                break;
+            }
+            case 'comp_description': {
+                let regex = new RegExp(validatorConfig.comp_description);
+                let res = regex.test(field.value);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 403,
+                    origin: 'validateField',
+                    title: 'Doesnt Match Regex',
+                    message: `Component description: "${field.value}" does not meet the criteria.`
+                });
+                break;
+            }
+            // Components - Theme
+            case 'comp_verifyFileExists': {
+                let res = await verifyFileExists(`/components/${field.value}`);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 404,
+                    origin: 'validateField',
+                    title: 'File Not Found',
+                    message: `Component with file name: "${field.value}" could not be found in the theme components directory!`
+                });
+                break;
+            }
         }
-        case 'comp_description': {
-            let regex = new RegExp(validatorConfig.comp_description);
-            let res = regex.test(field.value);
-            fieldResponse.valid = res;
-            if(!res) fieldResponse.errors.push({
-                code: 403,
-                origin: 'validateField',
-                title: 'Doesnt Match Regex',
-                message: `Component description: "${field.value}" does not meet the criteria.`
-            });
-            break;
-        }
-        // Components - Theme
-        case 'comp_verifyFileExists': {
-            let res = await verifyFileExists(`/components/${field.value}`);
-            fieldResponse.valid = res;
-            if(!res) fieldResponse.errors.push({
-                code: 404,
-                origin: 'validateField',
-                title: 'File Not Found',
-                message: `Component with file name: "${field.value}" could not be found in the theme components directory!`
-            });
-            break;
-        }
+    } else {
+        fieldResponse.valid = false;
+        fieldResponse.errors.push({
+            code: 403,
+            origin: 'validateField',
+            title: 'Value is undefined',
+            message: `Method "${field.method}": value is undefined!`
+        });
     }
+
     return fieldResponse
 }
 
