@@ -7,38 +7,21 @@ import { v1 as uuidv1 } from 'uuid';
 // Handles adding a new component or updating one to the compononts.json array, making sure duplicates dont exists
 // Then saving the component and returning the component
 // Can be updated to handle many if needed in the future
-const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>, component: mod_componentModel, update: boolean): Promise<stor_comp_saveComponentHandlerRes> => {
+const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>, component: mod_componentModel): Promise<stor_comp_saveComponentHandlerRes> => {
     // Check if the component exists
     let compIndex = componentsArray.findIndex( x => x.file_name === component.file_name);
     if(compIndex != -1) {
-        if(update) {
-            // Update object and save
-            let newCompObj: mod_componentModel = {...componentsArray[compIndex], ...component};
-            componentsArray[compIndex] = newCompObj;
-            let response = await writeSingleFile('/components.json', 'json', componentsArray);
-            console.log('UPDATED');
-            return {
-                saved: response,
-                updated: true,
-                component: componentsArray[compIndex]
-            }
-        }
-        else {
-            return {
-                saved: false,
-                updated: false,
-                component: component
-            }
+        return {
+            saved: false,
+            component: component
         }
     } 
     else {
         // Add to array and save
         componentsArray.push(component);
         let response = await writeSingleFile('/components.json', 'json', componentsArray);
-        console.log('ADDED');
         return {
             saved: response,
-            updated: false,
             component: component
         }
     }
@@ -131,13 +114,15 @@ const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promis
             let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
 
             // Make sure it exists elseo throw
-            let findComp = componentData.findIndex( x => x.id === id );
-            if(findComp != -1) {
-                // Update
-                let componentRes = await __saveComponentHandler(componentData, data, true);
+            let findCompIndex = componentData.findIndex( x => x.id === id );
+            if(findCompIndex != -1) {
+                // Update object and save
+                let newCompObj: mod_componentModel = {...componentData[findCompIndex], ...data};
+                componentData[findCompIndex] = newCompObj;
+                let response = await writeSingleFile('/components.json', 'json', componentData);
                 return {
-                    updated: componentRes.updated,
-                    component: componentRes.component
+                    updated: response,
+                    component: componentData[findCompIndex]
                 }
             } 
             else {
@@ -214,7 +199,7 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
                 date_modified: new Date().toString(),
                 fields: []
             }
-            let componentRes = await __saveComponentHandler(componentData, componentObj, false);
+            let componentRes = await __saveComponentHandler(componentData, componentObj);
             return componentRes
         }
         else {

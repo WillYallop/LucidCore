@@ -7,7 +7,7 @@ test('test if verifyFileExists function that checks if a theme file exists', asy
     const existsTrue = await themeController.verifyFileExists('/components/test.twig');
     const existsFalse = await themeController.verifyFileExists('/components/doesNotExist.twig');
     expect(existsTrue).toBe(true);
-    expect(existsFalse).toBe(false);
+    expect(existsFalse).toBe(false); 
 });
 
 

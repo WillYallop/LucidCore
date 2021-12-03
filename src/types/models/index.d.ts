@@ -1,7 +1,7 @@
 // Key: mod_
 
 interface mod_componentModel {
-    id?: string
+    id: string
     file_name?: string
     name?: string
     description?: string

@@ -38,7 +38,6 @@ interface stor_comp_updateSingleRes {
 
 // Internal
 interface stor_comp_saveComponentHandlerRes {
-    updated: boolean
     saved: boolean
     component: mod_componentModel
 }
