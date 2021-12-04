@@ -40,6 +40,13 @@ interface stor_comp_getSingleByIDRes {
     errors?: Array<core_errorMsg>
 }
 
+// getMultiple() 
+interface stor_comp_getMultipleRes {
+    success: boolean
+    components?: Array<mod_componentModel>
+    errors?: Array<core_errorMsg>
+}
+
 // Internal
 interface stor_comp_saveComponentHandlerRes {
     saved: boolean

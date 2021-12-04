@@ -243,7 +243,7 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
 // ------------------------------------ ------------------------------------
 // get single component
 // ------------------------------------ ------------------------------------
-const getSingleByID = async (id: string) => {
+const getSingleByID = async (id: string): Promise<stor_comp_getSingleByIDRes> => {
     // Verify ID
     // Get component data
     // Return component
@@ -291,13 +291,35 @@ const getSingleByID = async (id: string) => {
 // ------------------------------------ ------------------------------------
 // get multiple components
 // ------------------------------------ ------------------------------------
-const getMultiple = async (limit: number, skip: number) => {
-
+const getMultiple = async (limit: number, skip: number): Promise<stor_comp_getMultipleRes> => {
     // Validate inputs are numbers
     // Get component data
     // Splice items before the skip value index
     // Return component array
-
+    if(typeof limit != 'number' && typeof skip != 'number') {
+        return {
+            success: false,
+            errors: [
+                {
+                    code: 400,
+                    origin: 'getMultiple',
+                    title: 'Type Error',
+                    message: `Type of limit and skip paramater must be "number"! Not "${typeof limit}" and "${typeof skip}"!`
+                }
+            ]
+        }
+    }
+    // Process
+    else {
+        // Get component data
+        let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
+        componentData.splice(0, skip);
+        componentData.splice(limit);
+        return {
+            success: true,
+            components: componentData
+        }
+    }
 }
 
 export {
