@@ -60,6 +60,7 @@ As mentioned above, this CMS Core is tightly couple to the WillPress CMS, and as
 
 ### Static Site Generator
 > Not finalised
+
 This CMS Core uses the twig template engine to generate dynamic and flexible template and component markup. On top of the default twig syntax, we have some in-house tags such as ```<willpress>``` which depending pon the element will add in different data to the final buit page.
 
 **Custom elements include:**
