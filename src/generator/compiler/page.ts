@@ -6,22 +6,22 @@ const pageCompiler = async (data: gene_compilePage): Promise<string> => {
         // Build markup if needed and replace elements in tempalte markup.
         for(const element of elements) {
             switch(element.tag) {
-                case 'willpressHead': {
+                case 'lucidHead': {
                     // add seo
                     // add others
                     markup = markup.replace(element.regex, data.head);
                     break;
                 }
-                case 'willpressSeo': {
-                    
+                case 'lucidSeo': {
+                    markup = markup.replace(element.regex, '');
                     break;
                 }
-                case 'willpress': {
+                case 'lucidApp': {
                     let component = await elementsCompiler(element.regex, data.components);
                     markup = markup.replace(element.regex, component);
                     break;
                 }
-                case 'willpressFooter': {
+                case 'lucidFooter': {
                     markup = markup.replace(element.regex, data.footer);
                     break;
                 }

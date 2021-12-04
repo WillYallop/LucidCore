@@ -1,10 +1,10 @@
 
 
 const elements = [
-    { tag: 'willpressHead', regex: /<willpressHead>/i },
-    { tag: 'willpressSeo', regex: /<willpressSeo>/i },
-    { tag: 'willpress', regex: /<willpress>/i },
-    { tag: 'willpressFooter', regex: /<willpressFooter>/i }
+    { tag: 'lucidHead', regex: /<lucidHead>/i },
+    { tag: 'lucidSeo', regex: /<lucidSeo>/i },
+    { tag: 'lucidApp', regex: /<lucidApp>/i },
+    { tag: 'lucidFooter', regex: /<lucidFooter>/i }
 ];
 
 const elementsCompiler = async (regex: RegExp, components: gene_componentsMap): Promise<string> => {

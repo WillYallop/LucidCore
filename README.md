@@ -1,9 +1,9 @@
-# CMS CORE
+# Lucid - LucidCORE
 > Still In Development
 
-CMS Core is a dependency of WillPress (WIP name...), that controls the core functionality of the CMS. It does everything from handling statically generating the site, to validation and optimising media. 
+LucidCORE is a dependency of Lucid, that controls the core functionality. It does everything from handling statically generating the site, to validation and optimising media. 
 
-This CMS Core is tightly coupled to the CMS, and does not contain features such as the: API, the CMS site itself and more. It has been created as a seperate repository to make the WillPress CMS easier to maintain and update. 
+LucidCORE is tightly coupled to Lucid, and does not contain features such as the: API, the CMS site itself and more. It has been created as a seperate repository to make the Lucid easier to maintain and update. 
 
 **Important information:**
 - [Getting Started](#getting-started)
@@ -20,25 +20,25 @@ This CMS Core is tightly coupled to the CMS, and does not contain features such 
 
 ### Getting Started
 
-To use the CMS Core all you need to do is install it, and then import where needed.
+To use LucidCORE all you need to do is install it, and then import where needed.
 
 ```
-npm install cms_core
+npm install lucidcore
 ```
 
 Then, dending on how you decide to use this package, you can import it in one of two ways. The first will import it under one namespace, the second, more efficient way, you can specify what modules specifically you want to use. 
 
 ```typescript
-import * as willpressCore from 'cms_core';
+import * as lucid from 'lucid-core';
 // or, for example:
-import { validate, componentController, themeController, distController, generateApp } from 'cms_core';
+import { validate, componentController, themeController, distController, generateApp } from 'lucid-core';
 ```
 
-Once you have imported the package, you will need to then add the ```cms.config.ts``` file. Read more about this [here](#config).
+Once you have imported the package, you will need to then add the ```lucid.config.ts``` file. Read more about this [here](#config).
 
 ### Config
 
-At the root of your projects directory you must include a ``` cms.config.ts ``` file. As you would assume, this is in place to define importing config for the CMS Core to use. An exmaple of this file is bellow. Please note this is not final and is under heavy development still!
+At the root of your projects directory you must include a ``` lucid.config.ts ``` file. As you would assume, this is in place to define important config for LucidCORE to use. An exmaple of this file is bellow. Please note this is not final and is under heavy development still!
 
 ```typescript
 module.exports = {
@@ -56,19 +56,19 @@ module.exports = {
 
 ## Capabilities
 
-As mentioned above, this CMS Core is tightly couple to the WillPress CMS, and as such, isnt built to be generalised.
+As mentioned above, LucidCORE is tightly coupled to Lucid, and as such, its features are specific to that.
 
 ### Static Site Generator
 
 > Not finalised
 
-This CMS Core uses the twig template engine to generate dynamic and flexible templates and component markup. On top of the default twig syntax, we have some in-house tags such as ```<willpress>``` which depending on the element will add in different data to the final buit pages.
+LucidCORE uses the twig template engine to generate dynamic and flexible templates and component markup. On top of the default twig syntax, we have some in-house tags such as ```<lucidApp>``` which depending on the element will add in different data to the final buit pages.
 
 **Custom elements include:**
-- ```<willpressHead>```
-- ```<willpressSeo>```
-- ```<willpress>```
-- ```<willpressFooter>```
+- ```<lucidHead>```
+- ```<lucidSeo>```
+- ```<lucidApp>```
+- ```<lucidFooter>```
 
 Their functions are not fully defined yet, so this will be updated in the future.
 
@@ -117,7 +117,7 @@ The dist controller, much like the theme controller, is in charge of all things 
 
 ### Validation
 
-The validation module is in charge of validating all of the data that flows in and out of the CMS. This could be anything from the component name and description on the frontend, to verify if an ID is valid. There is only one endpoint for this module, but can take in a single validation object, or an array of them.
+The validation module is in charge of validating all of the data that flows in and out of LucidCORE. This could be anything from the component name and description on the frontend, to verify if an ID is valid. There is only one endpoint for this module, but can take in a single validation object, or an array of them.
 
 
 ### Media Optimiser
