@@ -2,9 +2,9 @@ import fs from 'fs-extra';
 
 const path = require('path');
 const config = require(path.resolve("./cms.config.ts"));
-const defaultTemplateDir = path.resolve('./defaults/templates');
 
 const themDir = path.resolve(config.directories.theme);
+const templatesDir = path.resolve(config.directories.templates);
 const tempGenDir =  path.resolve(config.directories.temp + '/generate');
 const distDir = path.resolve(config.directories.dist);
 
@@ -13,7 +13,7 @@ const distDir = path.resolve(config.directories.dist);
 // ------------------------------------ ------------------------------------
 const buildDefaultApp = async () => {
     try {
-        let markup = fs.readFileSync(`${defaultTemplateDir}/get-started.html`);
+        let markup = fs.readFileSync(`${templatesDir}/get-started.html`);
         fs.outputFileSync(`${tempGenDir}/index.html`, markup); 
         fs.rmdirSync(distDir, { recursive: true }); // Wipe app dist
         fs.copySync(tempGenDir, distDir); // Copy temp to app dist

@@ -2,6 +2,7 @@ module.exports = {
     directories: {
         theme: './theme',
         dist: './app',
-        temp: './temp'
+        temp: './temp',
+        templates: './templates'
     },
 }
