@@ -82,3 +82,28 @@ test('Test if updateSingle updates component in theme/components.json', async ()
         expect(component).toEqual(componentUpdateRes2.component);
     }
 });
+
+// For deleteSingle function
+test('Test if deleteSingle delete single component from theme/components.json', async () => {
+
+    // Reset components.json file
+    fs.writeFileSync(path.resolve('./theme/components.json'), '[]');
+
+    // Test - failed delete
+    const componentDeleteRes1 = await componentController.deleteSingle('af979c80-546d-11ec-9a0b-ad54294d4740');
+    expect(componentDeleteRes1.deleted).toBe(false);
+
+    // Save new component for test data.
+    const newComponentRes = await componentController.saveSingle({
+        name: 'Test name one',
+        description: 'Test Description one',
+        file_name: 'test.twig'
+    });
+
+    if(newComponentRes.component != undefined) {
+        // Test - should work
+        const componentDeleteRes2 = await componentController.deleteSingle(newComponentRes.component.id);
+        expect(componentDeleteRes2.deleted).toBe(true);
+    }
+
+});
