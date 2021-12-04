@@ -3,7 +3,7 @@ import componentCompiller from './compiler/components';
 import pageCompiler from './compiler/page';
 import { savePages, createSitemap, buildDefaultApp, copyStatic } from '../store/controller/dist';
 
-const generateApp = async (pages: Array<mod_pageModel>) => {
+const generateApp = async (pages: Array<mod_pageModel>): Promise<gene_generateAppRes> => {
     try {
         // Start timer
         const start = Date.now();
@@ -59,11 +59,11 @@ const generateApp = async (pages: Array<mod_pageModel>) => {
 
         return {
             build_time: (stop - start)/1000,
-            built_pages: builtPages.size
+            pages_built: builtPages.size
         }
     }
     catch(err) {
-        return err
+        throw err
     }
 }
 

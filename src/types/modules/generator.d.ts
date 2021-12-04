@@ -30,3 +30,9 @@ interface gene_compilePage {
     head: string
     footer: string
 }
+
+
+interface gene_generateAppRes {
+    build_time: number,
+    pages_built: number
+}
