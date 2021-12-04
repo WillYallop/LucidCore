@@ -1,9 +1,9 @@
-# Lucid - LucidCORE
+# Lucid - LucidCore
 > Still In Development
 
-LucidCORE is a dependency of Lucid, that controls the core functionality. It does everything from handling statically generating the site, to validation and optimising media. 
+LucidCore is a dependency of Lucid, that controls the core functionality. It does everything from handling statically generating the site, to validation and optimising media. 
 
-LucidCORE is tightly coupled to Lucid, and does not contain features such as the: API, the CMS site itself and more. It has been created as a seperate repository to make the Lucid easier to maintain and update. 
+LucidCore is tightly coupled to Lucid, and does not contain features such as the: API, the CMS site itself and more. It has been created as a seperate repository to make the Lucid easier to maintain and update. 
 
 **Important information:**
 - [Getting Started](#getting-started)
@@ -20,10 +20,10 @@ LucidCORE is tightly coupled to Lucid, and does not contain features such as the
 
 ### Getting Started
 
-To use LucidCORE all you need to do is install it, and then import where needed.
+To use LucidCore all you need to do is install it, and then import where needed.
 
 ```
-npm install lucidcore
+npm install LucidCore
 ```
 
 Then, dending on how you decide to use this package, you can import it in one of two ways. The first will import it under one namespace, the second, more efficient way, you can specify what modules specifically you want to use. 
@@ -38,7 +38,7 @@ Once you have imported the package, you will need to then add the ```lucid.confi
 
 ### Config
 
-At the root of your projects directory you must include a ``` lucid.config.ts ``` file. As you would assume, this is in place to define important config for LucidCORE to use. An exmaple of this file is bellow. Please note this is not final and is under heavy development still!
+At the root of your projects directory you must include a ``` lucid.config.ts ``` file. As you would assume, this is in place to define important config for LucidCore to use. An exmaple of this file is bellow. Please note this is not final and is under heavy development still!
 
 ```typescript
 module.exports = {
@@ -56,13 +56,13 @@ module.exports = {
 
 ## Capabilities
 
-As mentioned above, LucidCORE is tightly coupled to Lucid, and as such, its features are specific to that.
+As mentioned above, LucidCore is tightly coupled to Lucid, and as such, its features are specific to that.
 
 ### Static Site Generator
 
 > Not finalised
 
-LucidCORE uses the twig template engine to generate dynamic and flexible templates and component markup. On top of the default twig syntax, we have some in-house tags such as ```<lucidApp>``` which depending on the element will add in different data to the final buit pages.
+LucidCore uses the twig template engine to generate dynamic and flexible templates and component markup. On top of the default twig syntax, we have some in-house tags such as ```<lucidApp>``` which depending on the element will add in different data to the final buit pages.
 
 **Custom elements include:**
 - ```<lucidHead>```
@@ -117,7 +117,7 @@ The dist controller, much like the theme controller, is in charge of all things 
 
 ### Validation
 
-The validation module is in charge of validating all of the data that flows in and out of LucidCORE. This could be anything from the component name and description on the frontend, to verify if an ID is valid. There is only one endpoint for this module, but can take in a single validation object, or an array of them.
+The validation module is in charge of validating all of the data that flows in and out of LucidCore. This could be anything from the component name and description on the frontend, to verify if an ID is valid. There is only one endpoint for this module, but can take in a single validation object, or an array of them.
 
 
 ### Media Optimiser
