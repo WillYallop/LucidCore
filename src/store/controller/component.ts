@@ -27,6 +27,15 @@ const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>
     }
 }
 
+// Handles merging and turning the verify.fields array into single errors array. 
+const __verifyFieldsToErrorArray = (errors: Array<core_errorMsg>, verifyFields: Array<vali_validateFieldResponse>): Array<core_errorMsg> => {
+    let errorArray = errors;
+    verifyFields.forEach((field) => {
+        errorArray = errorArray.concat(field.errors);
+    });
+    return errorArray;
+}
+
 // EXTERNAL
 // ------------------------------------ ------------------------------------
 // delete single component
@@ -67,9 +76,11 @@ const deleteSingle = async (id: string): Promise<stor_comp_deleteSingleRes> => {
         }
     }
     else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
         return {
             deleted: false,
-            fields: verifyData.fields
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
         }
     }
 }
@@ -140,9 +151,11 @@ const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promis
             }
         }
         else {
+            // Define custom errors
+            let errors: Array<core_errorMsg> = [];
             return {
                 updated: false,
-                fields: verifyData.fields,
+                errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
             }
         }
     }
@@ -218,15 +231,79 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
 
     }
     else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
         return {
             saved: false,
-            fields: verifyData.fields,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
         }
     }
+}
+
+// ------------------------------------ ------------------------------------
+// get single component
+// ------------------------------------ ------------------------------------
+const getSingleByID = async (id: string) => {
+    // Verify ID
+    // Get component data
+    // Return component
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: id
+        }
+    ]);
+    if(verifyData.valid) {
+
+        let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
+        let findComponent = componentData.find( x => x.id === id );
+        if(findComponent) {
+            return {
+                success: true,
+                component: findComponent
+            }
+        }
+        else {
+            return {
+                success: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'getSingleByID',
+                        title: 'Component Not Found',
+                        message: `Cannot get component with ID: "${id}" because it cannot be found!`
+                    }
+                ]
+            }
+
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            success: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
+}
+
+// ------------------------------------ ------------------------------------
+// get multiple components
+// ------------------------------------ ------------------------------------
+const getMultiple = async (limit: number, skip: number) => {
+
+    // Validate inputs are numbers
+    // Get component data
+    // Splice items before the skip value index
+    // Return component array
+
 }
 
 export {
     saveSingle,
     updateSingle,
-    deleteSingle
+    deleteSingle,
+    getSingleByID,
+    getMultiple
 }

@@ -4,7 +4,6 @@
 interface stor_comp_deleteSingleRes {
     deleted: boolean
     errors?: Array<core_errorMsg>
-    fields?: Array<vali_validateFieldResponse>
 }
 
 // saveSingle()
@@ -16,7 +15,6 @@ interface stor_comp_saveSingleInp {
 }
 interface stor_comp_saveSingleRes {
     saved: boolean,
-    fields?: Array<vali_validateFieldResponse>
     component?: mod_componentModel
     errors?: Array<core_errorMsg>
 }
@@ -31,7 +29,13 @@ interface stor_comp_updateSingleInp {
 }
 interface stor_comp_updateSingleRes {
     updated: boolean
-    fields?: Array<vali_validateFieldResponse>
+    component?: mod_componentModel
+    errors?: Array<core_errorMsg>
+}
+
+// getSingleByID()
+interface stor_comp_getSingleByIDRes {
+    success: boolean
     component?: mod_componentModel
     errors?: Array<core_errorMsg>
 }

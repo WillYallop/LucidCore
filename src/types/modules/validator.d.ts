@@ -7,9 +7,11 @@ interface vali_validateFieldResponse {
     method: string,
     errors: Array<core_errorMsg>
 }
+
+type vali_validateFieldMethods = 'comp_name' | 'comp_description' | 'comp_verifyFileExists' | 'uuidVerify'
 interface vali_validateFieldObj {
     value: string,
-    method: string
+    method: vali_validateFieldMethods
 }
 interface vali_validateResponse {
     valid: boolean,
