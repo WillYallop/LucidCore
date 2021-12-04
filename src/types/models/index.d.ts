@@ -1,11 +1,5 @@
 // Key: mod_
 
-// Component Fields Model
-interface mod_componentFieldModel {
-    name: string
-    data: any
-}
-
 // Component Model
 interface mod_componentModel {
     id: string
@@ -15,8 +9,9 @@ interface mod_componentModel {
     preview_url: string
     date_added: string
     date_modified: string
-    fields: Array<mod_componentFieldModel> // will be changed 
+    fields: Array<string> // will be changed 
 }
+
 
 // Page Model 
 interface mod_pageModel {
@@ -29,5 +24,15 @@ interface mod_pageModel {
         title: string
         description: string
     }
-    components: Array<mod_componentModel>
+    components: Array<mod_pageComponentModel>
+}
+interface mod_pageComponentModel {
+    id: string
+    file_name: string
+    name: string
+    fields: Array<mod_pageComponentFieldModel>
+}
+interface mod_pageComponentFieldModel {
+    name: string
+    data: any
 }

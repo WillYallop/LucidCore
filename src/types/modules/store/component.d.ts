@@ -25,7 +25,7 @@ interface stor_comp_updateSingleInp {
     name?: string
     description?: string
     preview_url?: string
-    fields?: Array<mod_componentFieldModel> // will be changed 
+    fields?: Array<string> // will be changed 
 }
 interface stor_comp_updateSingleRes {
     updated: boolean

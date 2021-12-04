@@ -7,7 +7,7 @@ const { TwingEnvironment, TwingLoaderFilesystem } = require('twing');
 const loader = new TwingLoaderFilesystem(path.resolve(themeDir + '/components'));
 const twing = new TwingEnvironment(loader);
 
-const __generateDataField = async (fields: Array<mod_componentFieldModel>) => {
+const __generateDataField = async (fields: Array<mod_pageComponentFieldModel>) => {
     // TODO
     let response: any = {};
     for (const field of fields) {
@@ -16,7 +16,7 @@ const __generateDataField = async (fields: Array<mod_componentFieldModel>) => {
     return response;
 }
 
-const componentCompiller = async (components: Array<mod_componentModel>): Promise<gene_componentsMap> => {
+const componentCompiller = async (components: Array<mod_pageComponentModel>): Promise<gene_componentsMap> => {
     try {
         // Create empty component map
         const componentsMap: gene_componentsMap = new Map();
