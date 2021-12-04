@@ -1,12 +1,13 @@
 import validate from "./validator";
-import * as store from "./store";
 import generateApp from './generator';
+import * as componentController from './controller/component';
+import * as themeController from './controller/theme';
+import * as distController from './controller/dist';
 
 export {
     validate,
-    store,
+    componentController,
+    themeController,
+    distController,
     generateApp
 };
-
-// willPress.store.componentController.saveSingle();
-// willPress.store.resetAll()

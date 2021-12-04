@@ -1,7 +1,7 @@
 /// <reference path="../../src/types/main.d.ts" />
 
 import fs from 'fs-extra';
-import * as componentController from "../../src/store/controller/component";
+import * as componentController from "../../src/controller/component";
 import { v1 as uuidv1 } from 'uuid';
 const path = require('path');
 

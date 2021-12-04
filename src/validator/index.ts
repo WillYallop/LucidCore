@@ -1,5 +1,5 @@
 // Methods
-import { verifyFileExists } from "../store/controller/theme";
+import { verifyFileExists } from "../controller/theme";
 import validatorConfig from './validator-config';
 import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';

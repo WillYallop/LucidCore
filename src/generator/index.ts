@@ -1,7 +1,7 @@
 import templateCompiller from './compiler/template';
 import componentCompiller from './compiler/components';
 import pageCompiler from './compiler/page';
-import { savePages, createSitemap, buildDefaultApp, copyStatic } from '../store/controller/dist';
+import { savePages, createSitemap, buildDefaultApp, copyStatic } from '../controller/dist';
 
 const generateApp = async (pages: Array<mod_pageModel>): Promise<gene_generateAppRes> => {
     try {

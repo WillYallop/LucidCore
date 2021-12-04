@@ -38,7 +38,6 @@ const getSingleFileContent = async (target: string, type: 'json') => {
 // ------------------------------------ ------------------------------------
 const verifyFileExists = async (target: string) => {
     const directory = path.resolve(themeDir + target);
-
     if (fs.existsSync(directory)) return true
     else return false
 }
@@ -49,23 +48,12 @@ const verifyFileExists = async (target: string) => {
 const listDirectoryFiles = async (target: string): Promise<Array<string>> => {
     const directory = path.resolve(themeDir + target);
     // Will list all files names inside the target directory
-    try {
-        // Grab names of all templates in theme/templates directory
-        let fileNames: Array<string> = [];
-        let files = await fs.readdir(directory);
-        for await(const file of files) {
-            fileNames.push(file);
-        }
-        return fileNames;
+    let fileNames: Array<string> = [];
+    let files = await fs.readdir(directory);
+    for await(const file of files) {
+        fileNames.push(file);
     }
-    catch(err) {
-        throw {
-            code: 500,
-            origin: 'listDirectoryFiles',
-            title: 'Error Getting File List',
-            message: `There was an error getting the list of files from directory "${directory}"!`
-        };
-    }
+    return fileNames;
 }
 
 export {

@@ -1,4 +1,4 @@
-import * as themeController from "../../src/store/controller/theme";
+import * as themeController from "../../src/controller/theme";
 const fs = require('fs-extra');
 const path = require('path');
 

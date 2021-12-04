@@ -1,4 +1,4 @@
-import { listDirectoryFiles } from '../../store/controller/theme';
+import { listDirectoryFiles } from '../../controller/theme';
 // Path and theme directory
 const path = require('path');
 const config = require(path.resolve("./cms.config.ts"));

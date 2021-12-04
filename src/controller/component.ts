@@ -1,6 +1,6 @@
 
 import { getSingleFileContent, writeSingleFile } from './theme'
-import validate from '../../validator';
+import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
 
 // INTERNAL
@@ -135,7 +135,7 @@ const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promis
                     updated: response,
                     component: componentData[findCompIndex]
                 }
-            } 
+            }
             else {
                 return {
                     updated: false,
