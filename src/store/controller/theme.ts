@@ -59,12 +59,12 @@ const listDirectoryFiles = async (target: string): Promise<Array<string>> => {
         return fileNames;
     }
     catch(err) {
-        throw [{
+        throw {
             code: 500,
             origin: 'listDirectoryFiles',
             title: 'Error Getting File List',
             message: `There was an error getting the list of files from directory "${directory}"!`
-        }];
+        };
     }
 }
 

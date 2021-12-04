@@ -29,12 +29,12 @@ const templateCompiller = async (): Promise<gene_templatesMap> => {
         return templateMap;
     }
     catch(err) {
-        throw [{
+        throw {
             code: 500,
             origin: 'templateCompiller',
             title: 'Compiling Error',
             message: `Error while compiling templates!`
-        }, err];
+        };
     }
 }
 

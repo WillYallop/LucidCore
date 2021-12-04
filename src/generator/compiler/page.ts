@@ -30,12 +30,12 @@ const pageCompiler = async (data: gene_compilePage): Promise<string> => {
        return markup
     }
     catch(err) {
-        throw [{
+        throw {
             code: 500,
             origin: 'pageCompiler',
             title: 'Compiling Error',
             message: `Error while compiling page!`
-        }];
+        };
     }
 }
 

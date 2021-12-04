@@ -32,12 +32,12 @@ const componentCompiller = async (components: Array<mod_componentModel>): Promis
         return componentsMap;
     }
     catch(err) {
-        throw [{
+        throw {
             code: 500,
             origin: 'componentCompiller',
             title: 'Compiling Error',
             message: `Error while compiling page components!`
-        }];
+        };
     }
 }
 
