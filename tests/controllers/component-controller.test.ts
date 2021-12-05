@@ -1,4 +1,4 @@
-/// <reference path="../../src/types/index.d.ts" />
+/// <reference path="../../types/index.d.ts" />
 
 import fs from 'fs-extra';
 import * as componentController from "../../src/controller/component";
@@ -6,10 +6,10 @@ import { v1 as uuidv1 } from 'uuid';
 const path = require('path');
 
 // For saveSingle function
-test('Test if saveComponent saves to theme/components.json file', async () => {
+test('Test if saveComponent saves to theme/config/components.json file', async () => {
 
     // Reset components.json file
-    fs.writeFileSync(path.resolve('./theme/components.json'), '[]');
+    fs.writeFileSync(path.resolve('./theme/config/components.json'), '[]');
 
 
     // Test it saves
@@ -24,7 +24,7 @@ test('Test if saveComponent saves to theme/components.json file', async () => {
 
     // Test it exists
     // Find the newly created component in theme/components.json file
-    const directory = path.resolve('./theme/components.json');
+    const directory = path.resolve('./theme/config/components.json');
     const fileRes = fs.readFileSync(directory);
     const data: Array<mod_componentModel> = JSON.parse(fileRes.toString());
 
@@ -42,10 +42,10 @@ test('Test if saveComponent saves to theme/components.json file', async () => {
 });
 
 // For updateSingle function
-test('Test if updateSingle updates component in theme/components.json', async () => {
+test('Test if updateSingle updates component in theme/config/components.json', async () => {
 
     // Reset components.json file
-    fs.writeFileSync(path.resolve('./theme/components.json'), '[]');
+    fs.writeFileSync(path.resolve('./theme/config/components.json'), '[]');
 
 
     // Test update throws error if it cannot find the component.
@@ -74,7 +74,7 @@ test('Test if updateSingle updates component in theme/components.json', async ()
 
         // Test it exists
         // Find the newly updated component in theme/components.json file
-        const directory = path.resolve('./theme/components.json');
+        const directory = path.resolve('./theme/config/components.json');
         const fileRes = fs.readFileSync(directory);
         const data: Array<mod_componentModel> = JSON.parse(fileRes.toString());
 
@@ -84,10 +84,10 @@ test('Test if updateSingle updates component in theme/components.json', async ()
 });
 
 // For deleteSingle function
-test('Test if deleteSingle delete single component from theme/components.json', async () => {
+test('Test if deleteSingle delete single component from theme/config/components.json', async () => {
 
     // Reset components.json file
-    fs.writeFileSync(path.resolve('./theme/components.json'), '[]');
+    fs.writeFileSync(path.resolve('./theme/config/components.json'), '[]');
 
     // Test - failed delete
     const componentDeleteRes1 = await componentController.deleteSingle('af979c80-546d-11ec-9a0b-ad54294d4740');

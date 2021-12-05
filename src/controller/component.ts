@@ -18,7 +18,7 @@ const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>
     else {
         // Add to array and save
         componentsArray.push(component);
-        let response = await writeSingleFile('/components.json', 'json', componentsArray);
+        let response = await writeSingleFile('/config/components.json', 'json', componentsArray);
         return {
             saved: response,
             component: component
@@ -50,12 +50,12 @@ const deleteSingle = async (id: string): Promise<stor_comp_deleteSingleRes> => {
     ]);
     if(verifyData.valid) {
         // theme/components.json
-        let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
+        let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
         let componentIndex = componentData.findIndex( x => x.id === id);
         if(componentIndex != -1) {
             // Remove from array and write to file
             componentData.splice(componentIndex, 1);
-            let response = await writeSingleFile('/components.json', 'json', componentData);
+            let response = await writeSingleFile('/config/components.json', 'json', componentData);
             return {
                 deleted: response
             }
@@ -121,7 +121,7 @@ const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promis
         // Update data
         if(verifyData.valid) {
             // theme/components.json
-            let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
+            let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
 
             // Make sure it exists elseo throw
             let findCompIndex = componentData.findIndex( x => x.id === id );
@@ -129,7 +129,7 @@ const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promis
                 // Update object and save
                 let newCompObj: mod_componentModel = {...componentData[findCompIndex], ...data};
                 componentData[findCompIndex] = newCompObj;
-                let response = await writeSingleFile('/components.json', 'json', componentData);
+                let response = await writeSingleFile('/config/components.json', 'json', componentData);
                 return {
                     updated: response,
                     component: componentData[findCompIndex]
@@ -196,7 +196,7 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
     // Validate input data
     if(verifyData.valid) {
         // theme/components.json
-        let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
+        let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
         // Make sure it doesnt exist, else throw
         let findComponent = componentData.findIndex( x => x.file_name === data.file_name );
         if(findComponent === -1) {
@@ -254,7 +254,7 @@ const getSingleByID = async (id: string): Promise<stor_comp_getSingleByIDRes> =>
     ]);
     if(verifyData.valid) {
 
-        let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
+        let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
         let findComponent = componentData.find( x => x.id === id );
         if(findComponent) {
             return {
@@ -311,7 +311,7 @@ const getMultiple = async (limit: number, skip: number): Promise<stor_comp_getMu
     // Process
     else {
         // Get component data
-        let componentData: Array<mod_componentModel> = await getSingleFileContent('/components.json', 'json');
+        let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
         componentData.splice(0, skip);
         componentData.splice(limit);
         return {
