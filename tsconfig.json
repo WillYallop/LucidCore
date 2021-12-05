@@ -9,6 +9,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
+    "declaration": true,
     "typeRoots": [
       ".src/types/**/*",
       "./node_modules/@types",
