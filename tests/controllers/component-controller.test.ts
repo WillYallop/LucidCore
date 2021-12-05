@@ -1,4 +1,4 @@
-/// <reference path="../../src/types/main.d.ts" />
+/// <reference path="../../src/types/index.d.ts" />
 
 import fs from 'fs-extra';
 import * as componentController from "../../src/controller/component";

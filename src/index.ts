@@ -1,3 +1,5 @@
+/// <reference types="../types" />
+
 import validate from "./validator";
 import generateApp from './generator';
 import * as componentController from './controller/component';

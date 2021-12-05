@@ -12,13 +12,13 @@
     "declaration": true,
     "declarationMap": true,
     "typeRoots": [
-      ".src/types/**/*",
       "./node_modules/@types",
     ],
     "target": "es6"
   },
   "include": ["src/**/*.ts"],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
