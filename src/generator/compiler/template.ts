@@ -1,7 +1,7 @@
 import { listDirectoryFiles } from '../../controller/theme';
 // Path and theme directory
 const path = require('path');
-const config = require(path.resolve("./lucid.config.ts"));
+const config = require(path.resolve("./lucid.config.js"));
 const themeDir = config.directories.theme;
 // Twing Setup
 const { TwingEnvironment, TwingLoaderFilesystem } = require('twing');

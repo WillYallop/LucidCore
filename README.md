@@ -34,11 +34,11 @@ import * as lucid from 'lucid-core';
 import { validate, componentController, themeController, distController, generateApp } from 'lucid-core';
 ```
 
-Once you have imported the package, you will need to then add the ```lucid.config.ts``` file. Read more about this [here](#config).
+Once you have imported the package, you will need to then add the ```lucid.config.js``` file. Read more about this [here](#config).
 
 ### Config
 
-At the root of your projects directory you must include a ``` lucid.config.ts ``` file. As you would assume, this is in place to define important config for LucidCore to use. An exmaple of this file is bellow. Please note this is not final and is under heavy development still!
+At the root of your projects directory you must include a ``` lucid.config.js ``` file. As you would assume, this is in place to define important config for LucidCore to use. An exmaple of this file is bellow. Please note this is not final and is under heavy development still!
 
 ```typescript
 module.exports = {

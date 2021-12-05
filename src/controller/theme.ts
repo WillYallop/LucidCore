@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 
 const path = require('path');
-const config = require(path.resolve("./lucid.config.ts"));
+const config = require(path.resolve("./lucid.config.js"));
 const themeDir = config.directories.theme;
 
 // ------------------------------------ ------------------------------------
