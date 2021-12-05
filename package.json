@@ -1,9 +1,9 @@
 {
   "name": "lucid-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "LucidCore is the core dependency of Lucid.",
   "main": "dist/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
     "dist",
     "types"
