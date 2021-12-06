@@ -1,8 +1,12 @@
 module.exports = {
+    domain: 'lucid.local',
     directories: {
         theme: './theme',
-        dist: './app',
         temp: './temp',
-        templates: './templates'
+        templates: './templates',
+        // Dists 
+        dist: './app',
+        assets_dist: './dist/assets',
+        cms_dist: './dist/cms'
     },
 }
