@@ -1,6 +1,7 @@
-import { getSingleFileContent, writeSingleFile } from './theme'
+import { getSingleFileContent, writeSingleFile } from './theme';
 import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
+import { __verifyFieldsToErrorArray } from './helper/shared';
 
 // INTERNAL
 // Handles adding a new component or updating one to the compononts.json array, making sure duplicates dont exists
@@ -26,14 +27,6 @@ const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>
     }
 }
 
-// Handles merging and turning the verify.fields array into single errors array. 
-const __verifyFieldsToErrorArray = (errors: Array<core_errorMsg>, verifyFields: Array<vali_validateFieldResponse>): Array<core_errorMsg> => {
-    let errorArray = errors;
-    verifyFields.forEach((field) => {
-        errorArray = errorArray.concat(field.errors);
-    });
-    return errorArray;
-}
 
 // EXTERNAL
 // ------------------------------------ ------------------------------------
