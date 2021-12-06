@@ -48,7 +48,6 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
     if(verifyData.valid) {
         // Get theme/config/posts.json file
         let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
-
         // Check to see if the post wanting to be added exists:
         let findPost = postsData.findIndex( x => x.name === name.toLowerCase() && x.template_name === template_name);
         if(findPost === -1) {
