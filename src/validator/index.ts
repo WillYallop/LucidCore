@@ -64,6 +64,43 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                 });
                 break;  
             }
+            // Posts
+            case 'post_name': {
+                let regex = new RegExp(validatorConfig.post_name);
+                let res = regex.test(field.value);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 403,
+                    origin: 'validateField',
+                    title: 'Doesnt Match Regex',
+                    message: `Post name: "${field.value}" does not meet the criteria.`
+                });
+                break;
+            }
+            // Components - Template
+            case 'temp_verifyFileExists': {
+                let res = await verifyFileExists(`/templates/${field.value}`);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 404,
+                    origin: 'validateField',
+                    title: 'File Not Found',
+                    message: `Template with file name: "${field.value}" could not be found in the theme templates directory!`
+                });
+                break;
+            }
+            // Theme
+            case 'file_isTwigExtension': {
+                let res = field.value.includes('.twig');
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 403,
+                    origin: 'validateField',
+                    title: 'Wrong Extension',
+                    message: `Template file name must have ".twig" extension!`
+                });
+                break;
+            }
         }
     } else {
         fieldResponse.valid = false;
