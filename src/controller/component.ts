@@ -3,37 +3,12 @@ import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
 import { __verifyFieldsToErrorArray } from './helper/shared';
 
-// INTERNAL
-// Handles adding a new component or updating one to the compononts.json array, making sure duplicates dont exists
-// Then saving the component and returning the component
-// Can be updated to handle many if needed in the future
-const __saveComponentHandler = async (componentsArray: Array<mod_componentModel>, component: mod_componentModel): Promise<stor_comp_saveComponentHandlerRes> => {
-    // Check if the component exists
-    let compIndex = componentsArray.findIndex( x => x.file_name === component.file_name);
-    if(compIndex != -1) {
-        return {
-            saved: false,
-            component: component
-        }
-    } 
-    else {
-        // Add to array and save
-        componentsArray.push(component);
-        let response = await writeSingleFile('/config/components.json', 'json', componentsArray);
-        return {
-            saved: response,
-            component: component
-        }
-    }
-}
 
-
-// EXTERNAL
 // ------------------------------------ ------------------------------------
 // delete single component
 // ------------------------------------ ------------------------------------
 // This doesnt remove the component file.twig, it just unregisteres in from the components collection that stores its info and fields.
-const deleteSingle = async (id: string): Promise<stor_comp_deleteSingleRes> => {
+const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -82,7 +57,7 @@ const deleteSingle = async (id: string): Promise<stor_comp_deleteSingleRes> => {
 // ------------------------------------ ------------------------------------
 // Handles updating a component, all fields must pass validation first, can pass any amount of value to update
 // TO DO - add validation to the preview_url and fields paramaters
-const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promise<stor_comp_updateSingleRes> => {
+const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promise<cont_comp_updateSingleRes> => {
     if(Object.entries(data).length) {
         let validateObj: Array<vali_validateFieldObj> = [
             {
@@ -170,7 +145,7 @@ const updateSingle = async (id: string, data: stor_comp_updateSingleInp): Promis
 // register a new component
 // ------------------------------------ ------------------------------------
 // Will handle saving a new component 
-const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_saveSingleRes> => {
+const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_saveSingleRes> => {
     // Validate the data
     let verifyData = await validate([
         {
@@ -204,8 +179,13 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
                 date_modified: new Date().toString(),
                 fields: []
             }
-            let componentRes = await __saveComponentHandler(componentData, componentObj);
-            return componentRes
+            // Add to array and save
+            componentData.push(componentObj);
+            let response = await writeSingleFile('/config/components.json', 'json', componentData);
+            return {
+                saved: response,
+                component: componentObj
+            }
         }
         else {
             return {
@@ -235,7 +215,7 @@ const saveSingle = async (data: stor_comp_saveSingleInp): Promise<stor_comp_save
 // ------------------------------------ ------------------------------------
 // get single component
 // ------------------------------------ ------------------------------------
-const getSingleByID = async (id: string): Promise<stor_comp_getSingleByIDRes> => {
+const getSingleByID = async (id: string): Promise<cont_comp_getSingleByIDRes> => {
     // Verify ID
     // Get component data
     // Return component
@@ -283,7 +263,7 @@ const getSingleByID = async (id: string): Promise<stor_comp_getSingleByIDRes> =>
 // ------------------------------------ ------------------------------------
 // get multiple components
 // ------------------------------------ ------------------------------------
-const getMultiple = async (limit: number, skip: number): Promise<stor_comp_getMultipleRes> => {
+const getMultiple = async (limit: number, skip: number): Promise<cont_comp_getMultipleRes> => {
     // Validate inputs are numbers
     // Get component data
     // Splice items before the skip value index
