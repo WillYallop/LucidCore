@@ -22,6 +22,7 @@ Example posts.json file:
 
 import { getSingleFileContent, writeSingleFile } from './theme';
 import validate from '../validator';
+import { v1 as uuidv1 } from 'uuid';
 import { __verifyFieldsToErrorArray } from './helper/shared';
 
 
@@ -53,6 +54,7 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
         if(findPost === -1) {
             // If there is no entry add one
             let postObj: cont_post_postDeclaration = {
+                id: uuidv1(),
                 name: name,
                 template_name: template_name
             };
@@ -91,8 +93,49 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
 // ------------------------------------ ------------------------------------
 // remove single post type entry
 // ------------------------------------ ------------------------------------
-const removePostType = async () => {
-
+const removePostType = async (id: string): Promise<cont_post_removePostTypeRes> => {
+    // Validate the ID
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: id
+        }
+    ]);
+    if(verifyData.valid) {
+        // Get post data
+        let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
+        // Check if it exists and get index
+        let postIndex = postsData.findIndex( x => x.id === id );
+        if(postIndex != -1) {
+            // Remove from array and write
+            postsData.splice(postIndex, 1);
+            let response = await writeSingleFile('/config/posts.json', 'json', postsData);
+            return {
+                deleted: response
+            }
+        }
+        else {
+            return {
+                deleted: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'removePostType',
+                        title: 'Post Type Not Found',
+                        message: `Cannot delete post with ID: "${id}" because it cannot be found!`
+                    }
+                ]
+            }
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            deleted: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
 }
 
 // ------------------------------------ ------------------------------------
