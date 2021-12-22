@@ -19,18 +19,15 @@ type gene_pagseMap = Map<string, {
 }>
 // Page Compiler Input 
 interface gene_compilePage {
-    template: {
-        markup: string
-    },
+    template: string,
     seo: {
         title: string
         description: string
     }
     components: gene_componentsMap
     head: string
-    footer: string
+    script: string
 }
-
 
 interface gene_generateAppRes {
     build_time: number,

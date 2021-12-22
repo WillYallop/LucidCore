@@ -13,7 +13,7 @@ test('Test if saveComponent saves to theme/config/components.json file', async (
 
 
     // Test it saves
-    const fileName = 'test.twig';
+    const fileName = 'test.liquid';
     const saveComponent = await componentController.saveSingle({
         name: 'test',
         description: 'This is a test component!',
@@ -59,7 +59,7 @@ test('Test if updateSingle updates component in theme/config/components.json', a
     let newComponentRes = await componentController.saveSingle({
         name: 'Test name one',
         description: 'Test Description one',
-        file_name: 'test.twig'
+        file_name: 'test.liquid'
     });
 
     // Test update works and verify
@@ -97,7 +97,7 @@ test('Test if deleteSingle delete single component from theme/config/components.
     const newComponentRes = await componentController.saveSingle({
         name: 'Test name one',
         description: 'Test Description one',
-        file_name: 'test.twig'
+        file_name: 'test.liquid'
     });
 
     if(newComponentRes.component != undefined) {

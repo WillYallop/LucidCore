@@ -29,6 +29,7 @@ interface mod_pageModel {
 interface mod_pageComponentModel {
     id: string
     file_name: string
+    file_path: string
     name: string
     fields: Array<mod_pageComponentFieldModel>
 }
