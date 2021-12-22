@@ -1,6 +1,6 @@
 import { elementsCompiler, elements } from './elements';
 
-const pageCompiler = async (data: gene_compilePage): Promise<string> => {
+const pageCompiler = async (data: gene_compilePageOld): Promise<string> => {
     try {
        var markup = data.template.markup;
         // Build markup if needed and replace elements in tempalte markup.
