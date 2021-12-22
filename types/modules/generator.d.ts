@@ -28,18 +28,6 @@ interface gene_compilePage {
     head: string
     script: string
 }
-interface gene_compilePageOld {
-    template: {
-        markup: string
-    },
-    seo: {
-        title: string
-        description: string
-    }
-    components: gene_componentsMap
-    head: string
-    footer: string
-}
 
 interface gene_generateAppRes {
     build_time: number,

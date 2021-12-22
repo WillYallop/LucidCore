@@ -7,7 +7,7 @@ import { __verifyFieldsToErrorArray } from './helper/shared';
 // ------------------------------------ ------------------------------------
 // delete single component
 // ------------------------------------ ------------------------------------
-// This doesnt remove the component file.twig, it just unregisteres in from the components collection that stores its info and fields.
+// This doesnt remove the component file.liquid, it just unregisteres in from the components collection that stores its info and fields.
 const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
     // Validate the ID
     let verifyData = await validate([

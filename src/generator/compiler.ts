@@ -29,7 +29,8 @@ const componentCompiler = async (components: Array<mod_pageComponentModel>): Pro
         // Build templates out
         for (const component of components) {
             const data = await __generateDataField(component.fields); // TODO
-            const output = await engine.renderFile(component.file_name, data);
+            const dir = path.resolve(`${themeDir}/components/${component.file_path}`);
+            const output = await engine.renderFile(dir, data);
             componentsMap.set(component.name, {
                 id: component.id,
                 markup: output
@@ -67,9 +68,8 @@ const pageCompiler = async (data: gene_compilePage): Promise<string> => {
             render: async function (context: Context, emitter: Emitter) {
                 let componentsString: string = '';
                 for (const [key, value] of data.components.entries()) {
-                    componentsString += value.markup
+                    emitter.write(value.markup);
                 }
-                emitter.write(componentsString);
             }
         });
         engine.registerTag('lucidScript', {
@@ -78,7 +78,7 @@ const pageCompiler = async (data: gene_compilePage): Promise<string> => {
             }
         });
 
-        let dir = `${themeDir}/templates/${data.template}`;
+        let dir = path.resolve(`${themeDir}/templates/${data.template}`);
         let markup = await engine.renderFile(dir)
 
         return markup

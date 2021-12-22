@@ -90,14 +90,14 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                 break;
             }
             // Theme
-            case 'file_isTwigExtension': {
-                let res = field.value.includes('.twig');
+            case 'file_isLiquidExtension': {
+                let res = field.value.includes('.liquid');
                 fieldResponse.valid = res;
                 if(!res) fieldResponse.errors.push({
                     code: 403,
                     origin: 'validateField',
                     title: 'Wrong Extension',
-                    message: `Template file name must have ".twig" extension!`
+                    message: `Template file name must have ".liquid" extension!`
                 });
                 break;
             }

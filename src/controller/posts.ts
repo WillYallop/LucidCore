@@ -10,11 +10,11 @@ Example posts.json file:
 [
     {
         "name": "blogs",
-        "template_name": "page.twig"
+        "template_name": "page.liquid"
     },
     {
         "name": "jobs",
-        "template_name": "page.twig"
+        "template_name": "page.liquid"
     }
 ]
 
@@ -31,7 +31,7 @@ import { __verifyFieldsToErrorArray } from './helper/shared';
 // ------------------------------------ ------------------------------------
 const addPostType = async (name: string, template_name: string): Promise<cont_post_addPostTypeRes> => {
     // Make sure entry doesnt already exist with same name
-    // Verify the template_name exists in the theme/templates directory will always end in a .twig
+    // Verify the template_name exists in the theme/templates directory will always end in a .liquid
     let verifyData = await validate([
         {
             method: 'post_name',
@@ -42,7 +42,7 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
             value: template_name
         },
         {
-            method: 'file_isTwigExtension',
+            method: 'file_isLiquidExtension',
             value: template_name
         }
     ]);

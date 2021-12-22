@@ -62,7 +62,7 @@ As mentioned above, LucidCore is tightly coupled to Lucid, and as such, its feat
 
 > Not finalised
 
-LucidCore uses the twig template engine to generate dynamic and flexible templates and component markup. On top of the default twig syntax, we have some in-house tags such as ```<lucidApp>``` which depending on the element will add in different data to the final buit pages.
+LucidCore uses the liquid template engine to generate dynamic and flexible templates and component markup. On top of the default liquid syntax, we have some in-house tags such as ```<lucidApp>``` which depending on the element will add in different data to the final buit pages.
 
 **Custom elements include:**
 - ```<lucidHead>```

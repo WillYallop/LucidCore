@@ -4,8 +4,8 @@ const path = require('path');
 
 // For verifyFileExists function
 test('test if verifyFileExists function that checks if a theme file exists', async () => {
-    const existsTrue = await themeController.verifyFileExists('/components/test.twig');
-    const existsFalse = await themeController.verifyFileExists('/components/doesNotExist.twig');
+    const existsTrue = await themeController.verifyFileExists('/components/test.liquid');
+    const existsFalse = await themeController.verifyFileExists('/components/doesNotExist.liquid');
     expect(existsTrue).toBe(true);
     expect(existsFalse).toBe(false); 
 });
