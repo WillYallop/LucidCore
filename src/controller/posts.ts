@@ -166,9 +166,9 @@ const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTyp
                 errors: [
                     {
                         code: 404,
-                        origin: 'removePostType',
+                        origin: 'getSinglePostType',
                         title: 'Post Type Not Found',
-                        message: `Cannot delete post with ID: "${id}" because it cannot be found!`
+                        message: `Cannot get post with ID: "${id}" because it cannot be found!`
                     }
                 ]
             }
