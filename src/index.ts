@@ -1,5 +1,5 @@
 import validate from "./validator";
-import generateApp from './generator';
+import * as generator from './generator';
 import * as componentController from './controller/component';
 import * as postsController from './controller/posts';
 import * as themeController from './controller/theme';
@@ -11,5 +11,5 @@ export {
     postsController,
     themeController,
     distController,
-    generateApp
+    generator
 };

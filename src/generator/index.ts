@@ -60,4 +60,18 @@ const generateApp = async (pages: Array<mod_pageModel>): Promise<gene_generateAp
     }
 }
 
-export default generateApp;
+// Handle generating single component, this returns the markup and does not save to file system
+const generateComponent = async (components: Array<mod_pageComponentModel>): Promise<gene_componentsMap> => {
+    try {
+        const componentsMap = await componentCompiler(components); // generate components
+        return componentsMap;
+    }
+    catch(err) {
+        throw err;
+    }
+}
+
+export {
+    generateApp,
+    generateComponent
+};
