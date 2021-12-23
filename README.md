@@ -42,11 +42,15 @@ At the root of your projects directory you must include a ``` lucid.config.js ``
 
 ```typescript
 module.exports = {
+    domain: 'lucid.local',
     directories: {
         theme: './theme',
-        dist: './app',
         temp: './temp',
-        templates: './templates'
+        templates: './templates',
+        // Dists 
+        dist: './app',
+        assets_dist: './dist/assets',
+        cms_dist: './dist/cms'
     }
 }
 ```
@@ -62,19 +66,29 @@ As mentioned above, LucidCore is tightly coupled to Lucid, and as such, its feat
 
 > Not finalised
 
-LucidCore uses the liquid template engine to generate dynamic and flexible templates and component markup. On top of the default liquid syntax, we have some in-house tags such as ```<lucidApp>``` which depending on the element will add in different data to the final buit pages.
+LucidCore uses the [liquid](https://liquidjs.com/index.html) template engine to generate static html files (Note: this is not used to generate pages on the fly on get requests. This is is used to generate as required). On top of the standard tags liquid uses, we have a few more registered that will need to be used when your building out your templates. These are not final yet, but here they are:
 
-**Custom elements include:**
-- ```<lucidHead>```
-- ```<lucidSeo>```
-- ```<lucidApp>```
-- ```<lucidFooter>```
+### {% lucidHead %}
 
-Their functions are not fully defined yet, so this will be updated in the future.
+> Not finalised
+
+The ```{% lucidHead %}``` tag is used to insert data in the head. If you have any meta tags, fonts, style etc. they will be passed into this tag. This is all handled in the LucidCMS.
+
+### {% lucidSeo %}
+
+The ```{% lucidSeo %}``` tag is used to insert your standard meta tags. Unlike the ```{% lucidHead %}``` that doenst have any input type, this currently requires an object with a title and description key. This will be expanded in the future.
+
+### {% lucidScript %}
+
+The ```{% lucidScript %}``` tag is used to insert scripts into the footer of your pages. 
+
+### {% lucidApp %}
+
+THe ```{% lucidApp %}``` tag is perhaps the most important of the bunch. This is used to insert a pages unique components and data into a tempalte.
 
 **Exposed functions:**
-- ``` generateApp() ```
-- ``` generateComponent() ```
+- ``` generator.generateApp() ```
+- ``` generator.generateComponents() ```
 
 
 ### Controller
