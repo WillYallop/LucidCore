@@ -158,20 +158,21 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
         },
         {
             method: 'comp_verifyFileExists',
-            value: data.file_name
-        }
+            value: data.file_path
+        },
     ]);
     // Validate input data
     if(verifyData.valid) {
         // theme/components.json
         let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
         // Make sure it doesnt exist, else throw
-        let findComponent = componentData.findIndex( x => x.file_name === data.file_name );
+        let findComponent = componentData.findIndex( x => x.file_path === data.file_path );
         if(findComponent === -1) {
             // Base component object
             let componentObj: mod_componentModel = {
                 id: uuidv1(),
-                file_name: data.file_name,
+                file_name: data.file_path.replace(/^.*[\\\/]/, ''),
+                file_path: data.file_path,
                 name: data.name,
                 description: data.description,
                 preview_url: '',
@@ -195,7 +196,7 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
                         code: 403,
                         origin: 'saveSingle',
                         title: 'Component Already Registered',
-                        message: `Component with the file_name: "${data.file_name}" has already been registered. Please use the componentController.updateSingle() function!`
+                        message: `Component with the file_path: "${data.file_path}" has already been registered. Please use the componentController.updateSingle() function!`
                     }
                 ]
             }

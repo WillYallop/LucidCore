@@ -10,7 +10,7 @@ interface cont_comp_deleteSingleRes {
 interface cont_comp_saveSingleInp {
     name: string
     description: string
-    file_name: string
+    file_path: string
     image?: string
 }
 interface cont_comp_saveSingleRes {

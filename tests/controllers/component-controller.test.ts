@@ -17,7 +17,7 @@ test('Test if saveComponent saves to theme/config/components.json file', async (
     const saveComponent = await componentController.saveSingle({
         name: 'test',
         description: 'This is a test component!',
-        file_name: fileName
+        file_path: fileName
     });
     expect(saveComponent.saved).toBe(true);
     
@@ -36,7 +36,7 @@ test('Test if saveComponent saves to theme/config/components.json file', async (
     const saveSecondComponent = await componentController.saveSingle({
         name: 'test',
         description: 'This is a test component!',
-        file_name: fileName
+        file_path: fileName
     });
     expect(saveSecondComponent.saved).toBe(false);
 });
@@ -59,7 +59,7 @@ test('Test if updateSingle updates component in theme/config/components.json', a
     let newComponentRes = await componentController.saveSingle({
         name: 'Test name one',
         description: 'Test Description one',
-        file_name: 'test.liquid'
+        file_path: 'test.liquid'
     });
 
     // Test update works and verify
@@ -97,7 +97,7 @@ test('Test if deleteSingle delete single component from theme/config/components.
     const newComponentRes = await componentController.saveSingle({
         name: 'Test name one',
         description: 'Test Description one',
-        file_name: 'test.liquid'
+        file_path: 'test.liquid'
     });
 
     if(newComponentRes.component != undefined) {

@@ -4,12 +4,13 @@
 interface mod_componentModel {
     id: string
     file_name: string
+    file_path: string
     name: string
     description: string
     preview_url: string
     date_added: string
     date_modified: string
-    fields: Array<string> // will be changed 
+    fields: Array<string> // stores an array of IDs for fields config
 }
 
 
