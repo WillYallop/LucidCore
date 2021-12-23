@@ -157,7 +157,7 @@ const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTyp
         if(post != undefined) {
             return {
                 found: true,
-                post: post
+                post_type: post
             }
         }
         else {
@@ -185,15 +185,47 @@ const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTyp
 }
 
 // ------------------------------------ ------------------------------------
-// get all post types entries
+// get multiple post types entries
 // ------------------------------------ ------------------------------------
-const getAllPostTypes = async () => {
+const getMultiplePostTypes = async (limit: number, skip: number, all: boolean): Promise<cont_post_getMultiplePostTypeRes> => {
+    // Get component data
+    let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
 
+    if(all) {
+        return {
+            success: true,
+            post_types: postsData
+        }
+    } 
+    else {
+        if(typeof limit != 'number' && typeof skip != 'number') {
+            return {
+                success: false,
+                errors: [
+                    {
+                        code: 400,
+                        origin: 'getMultiplePostTypes',
+                        title: 'Type Error',
+                        message: `Type of limit and skip paramater must be "number"! Not "${typeof limit}" and "${typeof skip}"!`
+                    }
+                ]
+            }
+        }
+        // Process
+        else {
+            postsData.splice(0, skip);
+            postsData.splice(limit);
+            return {
+                success: true,
+                post_types: postsData
+            }
+        }
+    }
 }
 
 export {
     addPostType,
     removePostType,
     getSinglePostType,
-    getAllPostTypes
+    getMultiplePostTypes
 }

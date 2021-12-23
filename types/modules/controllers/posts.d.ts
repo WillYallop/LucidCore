@@ -22,6 +22,13 @@ interface cont_post_removePostTypeRes {
 // getSinglePostType
 interface cont_post_getSinglePostTypeRes {
     found: boolean
-    post?: cont_post_postDeclaration
+    post_type?: cont_post_postDeclaration
+    errors?: Array<core_errorMsg>
+}
+
+// getMultiplePostTypes
+interface cont_post_getMultiplePostTypeRes {
+    success: boolean
+    post_types?: Array<cont_post_postDeclaration>
     errors?: Array<core_errorMsg>
 }
