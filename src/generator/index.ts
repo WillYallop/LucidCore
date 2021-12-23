@@ -61,7 +61,7 @@ const generateApp = async (pages: Array<mod_pageModel>): Promise<gene_generateAp
 }
 
 // Handle generating single component, this returns the markup and does not save to file system
-const generateComponent = async (components: Array<mod_pageComponentModel>): Promise<gene_componentsMap> => {
+const generateComponents = async (components: Array<mod_pageComponentModel>): Promise<gene_componentsMap> => {
     try {
         const componentsMap = await componentCompiler(components); // generate components
         return componentsMap;
@@ -73,5 +73,5 @@ const generateComponent = async (components: Array<mod_pageComponentModel>): Pro
 
 export {
     generateApp,
-    generateComponent
+    generateComponents
 };
