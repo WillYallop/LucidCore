@@ -139,17 +139,49 @@ const removePostType = async (id: string): Promise<cont_post_removePostTypeRes> 
 }
 
 // ------------------------------------ ------------------------------------
-// update post type entry
-// ------------------------------------ ------------------------------------
-const updatePostType = async () => {
-
-}
-
-// ------------------------------------ ------------------------------------
 // get single post type entry
 // ------------------------------------ ------------------------------------
-const getSinglePostType = async () => {
-
+const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTypeRes> => {
+    // Validate the ID
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: id
+        }
+    ]);
+    if(verifyData.valid) {
+        // Get post data
+        let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
+        // Check if it exists and get it
+        let post = postsData.find( x => x.id === id );
+        if(post != undefined) {
+            return {
+                found: true,
+                post: post
+            }
+        }
+        else {
+            return {
+                found: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'removePostType',
+                        title: 'Post Type Not Found',
+                        message: `Cannot delete post with ID: "${id}" because it cannot be found!`
+                    }
+                ]
+            }
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            found: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
 }
 
 // ------------------------------------ ------------------------------------
@@ -162,7 +194,6 @@ const getAllPostTypes = async () => {
 export {
     addPostType,
     removePostType,
-    updatePostType,
     getSinglePostType,
     getAllPostTypes
 }

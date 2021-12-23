@@ -18,3 +18,10 @@ interface cont_post_removePostTypeRes {
     deleted: boolean
     errors?: Array<core_errorMsg>
 }
+
+// getSinglePostType
+interface cont_post_getSinglePostTypeRes {
+    found: boolean
+    post?: cont_post_postDeclaration
+    errors?: Array<core_errorMsg>
+}
