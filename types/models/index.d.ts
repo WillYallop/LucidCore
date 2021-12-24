@@ -10,9 +10,15 @@ interface mod_componentModel {
     preview_url: string
     date_added: string
     date_modified: string
-    fields: Array<string> // stores an array of IDs for fields config
+    content_types: Array<mod_contentTypesModel["id"]> // stores an array of IDs for fields config
 }
 
+// Content Types Model
+interface mod_contentTypesModel {
+    id: string
+    type: 'text' | 'email' | `rich_media` | 'number' | `range` | 'repeater' | 'select' | 'date' | 'media' | 'boolean' | 'json'
+    data: mod_ct_text | mod_ct_email | mod_ct_rich_media | mod_ct_number | mod_ct_range | mod_ct_repeater | mod_ct_select | mod_ct_select | mod_ct_date | mod_ct_media | mod_ct_boolean | mod_ct_json
+} 
 
 // Page Model 
 interface mod_pageModel {

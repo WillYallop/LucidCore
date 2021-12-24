@@ -178,7 +178,7 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
                 preview_url: '',
                 date_added: new Date().toString(),
                 date_modified: new Date().toString(),
-                fields: []
+                content_types: []
             }
             // Add to array and save
             componentData.push(componentObj);

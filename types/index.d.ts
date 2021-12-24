@@ -3,3 +3,4 @@
 /// <reference path="./modules/generator.d.ts" />
 /// <reference path="./modules/core.d.ts" />
 /// <reference path="./models/index.d.ts" />
+/// <reference path="./models/content-types.d.ts" />

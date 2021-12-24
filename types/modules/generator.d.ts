@@ -18,7 +18,7 @@ interface gen_generateAppInpComponentModel {
     file_name: mod_componentModel["file_name"]
     file_path: mod_componentModel["file_path"]
     name: mod_componentModel["name"]
-    fields: Array<gen_generateAppInpComponentFieldModel>
+    content_types: Array<gen_generateAppInpComponentFieldModel>
 }
 interface gen_generateAppInpComponentFieldModel {
     name: string
