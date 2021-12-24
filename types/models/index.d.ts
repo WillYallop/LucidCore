@@ -25,16 +25,5 @@ interface mod_pageModel {
         title: string
         description: string
     }
-    components: Array<mod_pageComponentModel>
-}
-interface mod_pageComponentModel {
-    id: string
-    file_name: string
-    file_path: string
-    name: string
-    fields: Array<mod_pageComponentFieldModel>
-}
-interface mod_pageComponentFieldModel {
-    name: string
-    data: any
+    components: Array<mod_componentModel["id"]>
 }

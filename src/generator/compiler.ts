@@ -12,7 +12,7 @@ const engine = new Liquid({
 })
 
 // Generate component data
-const __generateDataField = async (fields: Array<mod_pageComponentFieldModel>) => {
+const __generateDataField = async (fields: Array<gen_generateAppInpComponentFieldModel>) => {
     // TODO
     let response: any = {};
     for (const field of fields) {
@@ -22,7 +22,7 @@ const __generateDataField = async (fields: Array<mod_pageComponentFieldModel>) =
 }
 
 // Compile page components
-const componentCompiler = async (components: Array<mod_pageComponentModel>): Promise<gene_componentsMap> => {
+const componentCompiler = async (components: Array<gen_generateAppInpComponentModel>): Promise<gene_componentsMap> => {
     try {
         // Create empty component map
         const componentsMap: gene_componentsMap = new Map();

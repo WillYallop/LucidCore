@@ -3,7 +3,7 @@ import { savePages, createSitemap, buildDefaultApp, copyStatic } from '../contro
 
 
 // Handle statically generate the app
-const generateApp = async (pages: Array<mod_pageModel>): Promise<gene_generateAppRes> => {
+const generateApp = async (pages: Array<gen_generateAppInp>): Promise<gene_generateAppRes> => {
     try {
         // Start timer
         const start = Date.now();
@@ -61,7 +61,7 @@ const generateApp = async (pages: Array<mod_pageModel>): Promise<gene_generateAp
 }
 
 // Handle generating single component, this returns the markup and does not save to file system
-const generateComponents = async (components: Array<mod_pageComponentModel>): Promise<gene_componentsMap> => {
+const generateComponents = async (components: Array<gen_generateAppInpComponentModel>): Promise<gene_componentsMap> => {
     try {
         const componentsMap = await componentCompiler(components); // generate components
         return componentsMap;
