@@ -19,7 +19,6 @@ interface mod_pageModel {
     id: string
     template: string
     slug: string
-    path: string
     name: string
     seo: {
         title: string

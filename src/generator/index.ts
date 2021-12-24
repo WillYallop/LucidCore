@@ -34,7 +34,6 @@ const generateApp = async (pages: Array<gen_generateAppInp>): Promise<gene_gener
                 // Add new built page entry in builtPages map!
                 builtPages.set(page.id, {
                     slug: page.slug,
-                    path: page.path,
                     markup: markup
                 });
             }

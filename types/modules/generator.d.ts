@@ -5,7 +5,6 @@ interface gen_generateAppInp {
     id: mod_pageModel["id"]
     template: mod_pageModel["template"]
     slug: mod_pageModel["slug"]
-    path: mod_pageModel["path"]
     name: mod_pageModel["name"]
     seo: {
         title: string
@@ -40,8 +39,7 @@ type gene_componentsMap = Map<string, {
 
 // Page Compiler Res Map
 type gene_pagseMap = Map<string, {
-    slug: string
-    path: string
+    slug: mod_pageModel["slug"]
     markup: string
 }>
 // Page Compiler Input 
