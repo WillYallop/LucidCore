@@ -87,8 +87,28 @@ const saveSingle = async (componentID: mod_componentModel["id"], contentType: co
 // ------------------------------------ ------------------------------------
 // get all component content types data
 // ------------------------------------ ------------------------------------
-const getComponentContentTypes = async () => {
-
+const getAll = async (componentID: mod_componentModel["id"]): Promise<cont_cont_getAllRes> => {
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: componentID
+        }
+    ]);
+    if(verifyData.valid) {
+        let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
+        return {
+            success: true,
+            content_types: contentTypeFileData
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            success: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
 }
 
 // ------------------------------------ ------------------------------------
@@ -107,7 +127,7 @@ const updateSingle = async () => {
 
 export {
     saveSingle,
-    getComponentContentTypes,
+    getAll,
     deleteSingle,
     updateSingle
 }
