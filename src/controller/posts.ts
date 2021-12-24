@@ -29,7 +29,7 @@ import { __verifyFieldsToErrorArray } from './helper/shared';
 // ------------------------------------ ------------------------------------
 // add new post type entry
 // ------------------------------------ ------------------------------------
-const addPostType = async (name: string, template_name: string): Promise<cont_post_addPostTypeRes> => {
+const addPostType = async (name: cont_post_postDeclaration["name"], template_name: cont_post_postDeclaration["template_name"]): Promise<cont_post_addPostTypeRes> => {
     // Make sure entry doesnt already exist with same name
     // Verify the template_name exists in the theme/templates directory will always end in a .liquid
     let verifyData = await validate([
@@ -93,7 +93,7 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
 // ------------------------------------ ------------------------------------
 // remove single post type entry
 // ------------------------------------ ------------------------------------
-const removePostType = async (id: string): Promise<cont_post_removePostTypeRes> => {
+const removePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont_post_removePostTypeRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -141,7 +141,7 @@ const removePostType = async (id: string): Promise<cont_post_removePostTypeRes> 
 // ------------------------------------ ------------------------------------
 // get single post type entry
 // ------------------------------------ ------------------------------------
-const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTypeRes> => {
+const getSinglePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont_post_getSinglePostTypeRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -187,7 +187,7 @@ const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTyp
 // ------------------------------------ ------------------------------------
 // get multiple post types entries
 // ------------------------------------ ------------------------------------
-const getMultiplePostTypes = async (limit: number, skip: number, all: boolean): Promise<cont_post_getMultiplePostTypeRes> => {
+const getMultiplePostTypes = async (limit?: number, skip?: number, all?: boolean): Promise<cont_post_getMultiplePostTypeRes> => {
     // Get component data
     let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
 
@@ -214,7 +214,7 @@ const getMultiplePostTypes = async (limit: number, skip: number, all: boolean): 
         // Process
         else {
             postsData.splice(0, skip);
-            postsData.splice(limit);
+            if(limit != undefined) postsData.splice(limit);
             return {
                 success: true,
                 post_types: postsData

@@ -12,7 +12,6 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
         method: field.method,
         errors: []
     }
-
     if(field.value != undefined) {
         switch(field.method) {
             // Components
