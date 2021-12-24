@@ -114,8 +114,50 @@ const getAll = async (componentID: mod_componentModel["id"]): Promise<cont_cont_
 // ------------------------------------ ------------------------------------
 // delete single component content type
 // ------------------------------------ ------------------------------------
-const deleteSingle = async () => {
-
+const deleteSingle = async (componentID: mod_componentModel["id"], contentTypeID: mod_contentTypesConfigModel["id"]): Promise<cont_cont_deleteSingleRes> => {
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: componentID
+        },
+        {
+            method: 'uuidVerify',
+            value: contentTypeID
+        }
+    ]);
+    if(verifyData.valid) {
+        let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
+        let findContentTypeIndex = contentTypeFileData.findIndex( x => x.id === contentTypeID);
+        if(findContentTypeIndex != -1) {
+            // Remove from array and write to file
+            contentTypeFileData.splice(findContentTypeIndex, 1);
+            let response = await writeSingleFile(`/config/content_types/${componentID}.json`, 'json', contentTypeFileData);
+            return {
+                deleted: response
+            }
+        }
+        else {
+            return {
+                deleted: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'contentTypeController.deleteSingle',
+                        title: 'Content Type Not Found',
+                        message: `Cannot delete content type with ID: "${contentTypeID}" for component with ID: "${contentTypeID}" because it cannot be found!`
+                    }
+                ]
+            }
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            deleted: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
 }
 
 // ------------------------------------ ------------------------------------
