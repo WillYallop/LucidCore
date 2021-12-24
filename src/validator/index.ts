@@ -23,7 +23,7 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                     code: 403,
                     origin: 'validateField',
                     title: 'Doesnt Match Regex',
-                    message: `Component name: "${field.value}" does not meet the criteria.`
+                    message: `Component name: "${field.value}" does not meet the criteria: "${validatorConfig.comp_name}".`
                 });
                 break;
             }
@@ -35,7 +35,7 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                     code: 403,
                     origin: 'validateField',
                     title: 'Doesnt Match Regex',
-                    message: `Component description: "${field.value}" does not meet the criteria.`
+                    message: `Component description: "${field.value}" does not meet the criteria: "${validatorConfig.comp_description}".`
                 });
                 break;
             }
@@ -72,7 +72,7 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                     code: 403,
                     origin: 'validateField',
                     title: 'Doesnt Match Regex',
-                    message: `Post name: "${field.value}" does not meet the criteria.`
+                    message: `Post name: "${field.value}" does not meet the criteria: "${validatorConfig.post_name}".`
                 });
                 break;
             }
@@ -97,6 +97,19 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                     origin: 'validateField',
                     title: 'Wrong Extension',
                     message: `Template file name must have ".liquid" extension!`
+                });
+                break;
+            }
+            // Content Type
+            case 'cont_name': {
+                let regex = new RegExp(validatorConfig.cont_name);
+                let res = regex.test(field.value);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 403,
+                    origin: 'validateField',
+                    title: 'Doesnt Match Regex',
+                    message: `Post name: "${field.value}" does not meet the criteria: "${validatorConfig.cont_name}".`
                 });
                 break;
             }
