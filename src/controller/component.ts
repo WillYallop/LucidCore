@@ -34,7 +34,7 @@ const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
                 errors: [
                     {
                         code: 404,
-                        origin: 'deleteSingle',
+                        origin: 'componentController.deleteSingle',
                         title: 'Component Not Found',
                         message: `Cannot delete component with ID: "${id}" because it cannot be found!`
                     }
@@ -109,7 +109,7 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
                     errors: [
                         {
                             code: 404,
-                            origin: 'updateSingle',
+                            origin: 'componentController.updateSingle',
                             title: 'Component Not Found',
                             message: `Cannot find component with ID: "${id}" to update!`
                         }
@@ -132,7 +132,7 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
             errors: [
                 {
                     code: 403,
-                    origin: 'updateSingle',
+                    origin: 'componentController.updateSingle',
                     title: 'No Paramaters',
                     message: 'No paramaters passed to componentController.updateSingle() function!'
                 }
@@ -193,7 +193,7 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
                 errors: [
                     {
                         code: 403,
-                        origin: 'saveSingle',
+                        origin: 'componentController.saveSingle',
                         title: 'Component Already Registered',
                         message: `Component with the file_path: "${data.file_path}" has already been registered. Please use the componentController.updateSingle() function!`
                     }
@@ -241,7 +241,7 @@ const getSingleByID = async (id: string): Promise<cont_comp_getSingleByIDRes> =>
                 errors: [
                     {
                         code: 404,
-                        origin: 'getSingleByID',
+                        origin: 'componentController.getSingleByID',
                         title: 'Component Not Found',
                         message: `Cannot get component with ID: "${id}" because it cannot be found!`
                     }
@@ -274,7 +274,7 @@ const getMultiple = async (limit: number, skip: number): Promise<cont_comp_getMu
             errors: [
                 {
                     code: 400,
-                    origin: 'getMultiple',
+                    origin: 'componentController.getMultiple',
                     title: 'Type Error',
                     message: `Type of limit and skip paramater must be "number"! Not "${typeof limit}" and "${typeof skip}"!`
                 }

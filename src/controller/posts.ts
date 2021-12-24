@@ -72,7 +72,7 @@ const addPostType = async (name: cont_post_postDeclaration["name"], template_nam
                 errors: [
                     {
                         code: 403,
-                        origin: 'addPostType',
+                        origin: 'postsController.addPostType',
                         title: 'Post Already Registered',
                         message: `Post with the name: "${name}" and template_name: "${template_name}" already exist!`
                     }
@@ -120,7 +120,7 @@ const removePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont
                 errors: [
                     {
                         code: 404,
-                        origin: 'removePostType',
+                        origin: 'postsController.removePostType',
                         title: 'Post Type Not Found',
                         message: `Cannot delete post with ID: "${id}" because it cannot be found!`
                     }
@@ -166,7 +166,7 @@ const getSinglePostType = async (id: cont_post_postDeclaration["id"]): Promise<c
                 errors: [
                     {
                         code: 404,
-                        origin: 'getSinglePostType',
+                        origin: 'postsController.getSinglePostType',
                         title: 'Post Type Not Found',
                         message: `Cannot get post with ID: "${id}" because it cannot be found!`
                     }
@@ -204,7 +204,7 @@ const getMultiplePostTypes = async (limit?: number, skip?: number, all?: boolean
                 errors: [
                     {
                         code: 400,
-                        origin: 'getMultiplePostTypes',
+                        origin: 'postsController.getMultiplePostTypes',
                         title: 'Type Error',
                         message: `Type of limit and skip paramater must be "number"! Not "${typeof limit}" and "${typeof skip}"!`
                     }

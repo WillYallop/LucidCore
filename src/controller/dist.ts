@@ -22,7 +22,7 @@ const buildDefaultApp = async () => {
     catch(err) {
         throw [{
             code: 500,
-            origin: 'buildDefaultApp',
+            origin: 'distController.buildDefaultApp',
             title: 'Dist Error',
             message: `Error while building default app to dist!`
         }]
@@ -42,7 +42,7 @@ const copyStatic = async () => {
     catch(err) {
         throw [{
             code: 500,
-            origin: 'copyStatic',
+            origin: 'distController.copyStatic',
             title: 'Dist Error',
             message: `Error while copying static theme directory to app dist!`
         }]
@@ -59,7 +59,7 @@ const createSitemap = async (pages: gene_pagseMap) => {
     catch(err) {
         throw({
             code: 500,
-            origin: 'createSitemap',
+            origin: 'distController.createSitemap',
             title: 'Dist Error',
             message: `Error while generating app sitemap!`
         });
@@ -85,7 +85,7 @@ const savePages = async (pages: gene_pagseMap): Promise<boolean> => {
         fs.rmdirSync(tempGenDir, { recursive: true }); // Wipe temp directory
         throw [{
             code: 500,
-            origin: 'savePages',
+            origin: 'distController.savePages',
             title: 'Dist Error',
             message: `Error while saving page to dist directory!`
         }]
