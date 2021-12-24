@@ -24,7 +24,6 @@ interface cont_comp_updateSingleInp {
     name?: mod_componentModel["name"]
     description?: mod_componentModel["description"]
     preview_url?: mod_componentModel["preview_url"]
-    content_types?: mod_componentModel["content_types"]
 }
 interface cont_comp_updateSingleRes {
     updated: boolean

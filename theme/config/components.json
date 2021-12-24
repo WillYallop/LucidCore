@@ -7,10 +7,7 @@
         "description": "This is a test component!",
         "preview_url": "",
         "date_added": "Thu Dec 23 2021 17:26:25 GMT+0000 (Greenwich Mean Time)",
-        "date_modified": "Thu Dec 23 2021 17:26:25 GMT+0000 (Greenwich Mean Time)",
-        "content_types": [
-            "41c05550-59b1-11ec-a836-573ca2acfe97"
-        ]
+        "date_modified": "Thu Dec 23 2021 17:26:25 GMT+0000 (Greenwich Mean Time)"
     },
     {
         "id": "4c46db90-6431-11ec-b15b-0b09a8ee2287",
@@ -20,7 +17,6 @@
         "description": "This is a test component!",
         "preview_url": "",
         "date_added": "Thu Dec 23 2021 20:45:43 GMT+0000 (Greenwich Mean Time)",
-        "date_modified": "Thu Dec 23 2021 20:45:43 GMT+0000 (Greenwich Mean Time)",
-        "content_types": []
+        "date_modified": "Thu Dec 23 2021 20:45:43 GMT+0000 (Greenwich Mean Time)"
     }
 ]
