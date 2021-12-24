@@ -1,0 +1,9 @@
+{
+    "id": "41c05550-59b1-11ec-a836-573ca2acfe97",
+    "name": "Section Title",
+    "type": "text",
+    "config": {
+        "max_length": 100,
+        "min_length": 0
+    }
+}
