@@ -1,0 +1,28 @@
+[
+    {
+        "id": "123-456",
+        "name": "header_name",
+        "links": [
+            {
+                "id": "123-456",
+                "text": "Home Page",
+                "blank": false,
+                "page_id": "123-456",
+                "external": false
+            },
+            {
+                "id": "123-456",
+                "text": "Blog Page",
+                "blank": false,
+                "page_id": "2234-45264",
+                "external": false
+            },
+            {
+                "id": "123-456",
+                "text": "App",
+                "blank": true,
+                "external": true
+            }
+        ]
+    }
+]
