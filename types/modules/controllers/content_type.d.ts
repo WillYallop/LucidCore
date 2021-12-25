@@ -24,3 +24,11 @@ interface cont_cont_deleteSingleRes {
     deleted: boolean
     errors?: Array<core_errorMsg>
 }
+
+// updateSingle()
+interface cont_cont_updateSingleInp {
+    id: mod_contentTypesConfigModel["id"]
+    name?: mod_contentTypesConfigModel["name"]
+    type?: mod_contentTypesConfigModel["type"]
+    config?: mod_contentTypesConfigModel["config"]
+}

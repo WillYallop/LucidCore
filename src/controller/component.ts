@@ -2,6 +2,7 @@ import { getSingleFileContent, writeSingleFile } from './theme';
 import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
 import { __verifyFieldsToErrorArray } from './helper/shared';
+import merge from 'lodash/merge';
 
 
 // ------------------------------------ ------------------------------------
@@ -95,7 +96,7 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
             let findCompIndex = componentData.findIndex( x => x.id === id );
             if(findCompIndex != -1) {
                 // Update object and save
-                let newCompObj: mod_componentModel = {...componentData[findCompIndex], ...data};
+                let newCompObj: mod_componentModel = merge(componentData[findCompIndex], data);
                 componentData[findCompIndex] = newCompObj;
                 let response = await writeSingleFile('/config/components.json', 'json', componentData);
                 return {
