@@ -83,6 +83,10 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
                     });
                     break;
                 }
+                case 'preview_url': {
+
+                    break;
+                }
             }
         }
         // Validate

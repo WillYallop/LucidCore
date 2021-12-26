@@ -41,7 +41,6 @@ import { __verifyFieldsToErrorArray, __convertStringLowerUnderscore } from './he
 import merge from 'lodash/merge';
 
 
-
 // ------------------------------------ ------------------------------------
 // create a new menu
 // ------------------------------------ ------------------------------------
@@ -132,15 +131,85 @@ const createMenu = async (menuData: cont_menu_createMenuInp): Promise<cont_menu_
 // ------------------------------------ ------------------------------------
 // responsible for updating item from a menu
 // ------------------------------------ ------------------------------------
-const updateMenu = async () => {
-
+const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updateMenuInp) => {
+    // Verify ID and if we have it: the name of the menu
+    // Get corresponding menu
+    // Update name / loop over links to find one matching our input and merge them
+    // Save the menu and return
+    let validateObj: Array<vali_validateFieldObj> = [
+        {
+            method: 'uuidVerify',
+            value: menuID
+        }
+    ];
+    if(menuData.name) validateObj.push({
+        method: 'menu_name',
+        value: __convertStringLowerUnderscore(menuData.name)
+    })
+    // Validate
+    let verifyData = await validate(validateObj);
+    // Update data
+    if(verifyData.valid) {
+        // Get menu config file
+        let menuConfigData: Array<mod_menuModel> = await getSingleFileContent('/config/menus.json', 'json');
+        // Find corresponding menu
+        let findMenu = menuConfigData.find( x => x.id === menuID );
+        if(findMenu) {
+            // Update name
+            findMenu.name = __convertStringLowerUnderscore(menuData.name || findMenu.name);
+            // Update links
+            if(menuData.links != undefined) {
+                menuData.links.forEach((link) => {
+                    // Find link index via id
+                    if(findMenu) { // beacuse typescript threw error otherwise..
+                        let linkIndex = findMenu.links.findIndex( x => x.id === link.id );
+                        if(linkIndex != -1) {
+                            let newLinkObj = merge(findMenu.links[linkIndex], link);
+                            // Depending on if external or not, only save either page_id or external_url
+                            if(newLinkObj.external) delete newLinkObj['page_id'];
+                            else delete newLinkObj['external_url'];
+                            // Update
+                            findMenu.links[linkIndex] = newLinkObj;
+                        }
+                    }
+                })
+            }
+            // Save to file
+            await writeSingleFile('/config/menus.json', 'json', menuConfigData);
+            return {
+                updated: true,
+                menu: findMenu
+            }
+        }
+        else {
+            return {
+                updated: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'menuController.updateMenu',
+                        title: 'Menu Doenst Exist',
+                        message: `Cannot find a menu with an ID of: "${menuID}"!`
+                    }
+                ]
+            }
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            updated: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
 }
 
 
 // ------------------------------------ ------------------------------------
 // responsible for updating item from a menu
 // ------------------------------------ ------------------------------------
-const deleteMenu = async () => {
+const deleteMenu = async (id: mod_menuModel["id"]) => {
 
 }
 
