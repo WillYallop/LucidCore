@@ -9,7 +9,7 @@ import merge from 'lodash/merge';
 // delete single component
 // ------------------------------------ ------------------------------------
 // This doesnt remove the component file.liquid, it just unregisteres in from the components collection that stores its info and fields.
-const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
+const deleteSingle = async (id: mod_componentModel["id"]): Promise<cont_comp_deleteSingleRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -58,7 +58,7 @@ const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
 // ------------------------------------ ------------------------------------
 // Handles updating a component, all fields must pass validation first, can pass any amount of value to update
 // TO DO - add validation to the preview_url and fields paramaters
-const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promise<cont_comp_updateSingleRes> => {
+const updateSingle = async (id: mod_componentModel["id"], data: cont_comp_updateSingleInp): Promise<cont_comp_updateSingleRes> => {
     if(Object.entries(data).length) {
         let validateObj: Array<vali_validateFieldObj> = [
             {
@@ -220,7 +220,7 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
 // ------------------------------------ ------------------------------------
 // get single component
 // ------------------------------------ ------------------------------------
-const getSingleByID = async (id: string): Promise<cont_comp_getSingleByIDRes> => {
+const getSingleByID = async (id: mod_componentModel["id"]): Promise<cont_comp_getSingleByIDRes> => {
     // Verify ID
     // Get component data
     // Return component
