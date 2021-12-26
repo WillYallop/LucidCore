@@ -1,27 +1,14 @@
 [
     {
-        "id": "123-456",
-        "name": "header_name",
+        "id": "46b45741-6655-11ec-bb74-bd3b83d7f47e",
+        "name": "jobs_menu",
         "links": [
             {
-                "id": "123-456",
-                "text": "Home Page",
-                "blank": false,
-                "page_id": "123-456",
-                "external": false
-            },
-            {
-                "id": "123-456",
+                "id": "46b45740-6655-11ec-bb74-bd3b83d7f47e",
                 "text": "Blog Page",
                 "blank": false,
-                "page_id": "2234-45264",
-                "external": false
-            },
-            {
-                "id": "123-456",
-                "text": "App",
-                "blank": true,
-                "external": true
+                "external": true,
+                "external_url": "https://williamyallop.com"
             }
         ]
     }

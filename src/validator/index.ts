@@ -109,7 +109,32 @@ const validateField = async (field: vali_validateFieldObj): Promise<vali_validat
                     code: 403,
                     origin: 'validateField',
                     title: 'Doesnt Match Regex',
-                    message: `Post name: "${field.value}" does not meet the criteria: "${validatorConfig.cont_name}".`
+                    message: `Content type name: "${field.value}" does not meet the criteria: "${validatorConfig.cont_name}".`
+                });
+                break;
+            }
+            // Menu
+            case 'menu_name': {
+                let regex = new RegExp(validatorConfig.menu_name);
+                let res = regex.test(field.value);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 403,
+                    origin: 'validateField',
+                    title: 'Doesnt Match Regex',
+                    message: `Menu name: "${field.value}" does not meet the criteria: "${validatorConfig.menu_name}".`
+                });
+                break;
+            }
+            case 'menu_linkText': {
+                let regex = new RegExp(validatorConfig.menu_linkText);
+                let res = regex.test(field.value);
+                fieldResponse.valid = res;
+                if(!res) fieldResponse.errors.push({
+                    code: 403,
+                    origin: 'validateField',
+                    title: 'Doesnt Match Regex',
+                    message: `Menu link text: "${field.value}" does not meet the criteria: "${validatorConfig.menu_linkText}".`
                 });
                 break;
             }

@@ -23,7 +23,7 @@ Example posts.json file:
 import { getSingleFileContent, writeSingleFile } from './theme';
 import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
-import { __verifyFieldsToErrorArray } from './helper/shared';
+import { __verifyFieldsToErrorArray, __convertStringLowerUnderscore } from './helper/shared';
 
 
 // ------------------------------------ ------------------------------------
@@ -35,7 +35,7 @@ const addPostType = async (name: cont_post_postDeclaration["name"], template_nam
     let verifyData = await validate([
         {
             method: 'post_name',
-            value: name
+            value: __convertStringLowerUnderscore(name)
         },
         {
             method: 'temp_verifyFileExists',
@@ -50,12 +50,12 @@ const addPostType = async (name: cont_post_postDeclaration["name"], template_nam
         // Get theme/config/posts.json file
         let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
         // Check to see if the post wanting to be added exists:
-        let findPost = postsData.findIndex( x => x.name === name.toLowerCase() && x.template_name === template_name);
+        let findPost = postsData.findIndex( x => x.name === __convertStringLowerUnderscore(name) && x.template_name === template_name);
         if(findPost === -1) {
             // If there is no entry add one
             let postObj: cont_post_postDeclaration = {
                 id: uuidv1(),
-                name: name,
+                name: __convertStringLowerUnderscore(name),
                 template_name: template_name
             };
             postsData.push(postObj);
@@ -74,7 +74,7 @@ const addPostType = async (name: cont_post_postDeclaration["name"], template_nam
                         code: 403,
                         origin: 'postsController.addPostType',
                         title: 'Post Already Registered',
-                        message: `Post with the name: "${name}" and template_name: "${template_name}" already exist!`
+                        message: `Post with the name: "${__convertStringLowerUnderscore(name)}" and template_name: "${template_name}" already exist!`
                     }
                 ]
             }
