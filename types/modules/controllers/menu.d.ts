@@ -29,3 +29,14 @@ interface cont_menu_updateMenuInp {
         external_url?: mod_menuModelLinks["external_url"]
     }>  
 }
+interface cont_menu_updateMenuRes {
+    updated: boolean
+    menu?: mod_menuModel
+    errors?: Array<core_errorMsg>
+}
+
+// Delete menu
+interface cont_menu_deleteMenuRes {
+    deleted: boolean
+    errors?: Array<core_errorMsg>
+}

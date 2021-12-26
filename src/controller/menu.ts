@@ -131,7 +131,7 @@ const createMenu = async (menuData: cont_menu_createMenuInp): Promise<cont_menu_
 // ------------------------------------ ------------------------------------
 // responsible for updating item from a menu
 // ------------------------------------ ------------------------------------
-const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updateMenuInp) => {
+const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updateMenuInp): Promise<cont_menu_updateMenuRes> => {
     // Verify ID and if we have it: the name of the menu
     // Get corresponding menu
     // Update name / loop over links to find one matching our input and merge them
@@ -209,8 +209,48 @@ const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updat
 // ------------------------------------ ------------------------------------
 // responsible for updating item from a menu
 // ------------------------------------ ------------------------------------
-const deleteMenu = async (id: mod_menuModel["id"]) => {
-
+const deleteMenu = async (menuID: mod_menuModel["id"]): Promise<cont_menu_deleteMenuRes> => {
+    // Validate the ID
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: menuID
+        }
+    ]);
+    if(verifyData.valid) {
+        // theme/components.json
+        let menuConfigData: Array<mod_menuModel> = await getSingleFileContent('/config/menus.json', 'json');
+        let menuIndex = menuConfigData.findIndex( x => x.id === menuID);
+        if(menuIndex != -1) {
+            // Remove from array and write to file
+            menuConfigData.splice(menuIndex, 1);
+            let response = await writeSingleFile('/config/menus.json', 'json', menuConfigData);
+            return {
+                deleted: response
+            }
+        }
+        else {
+            return {
+                deleted: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'modelController.deleteMenu',
+                        title: 'Menu Not Found',
+                        message: `Cannot delete menu with ID: "${menuID}" because it cannot be found!`
+                    }
+                ]
+            }
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            deleted: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
 }
 
 export {
