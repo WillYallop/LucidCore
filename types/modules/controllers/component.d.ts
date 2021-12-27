@@ -8,10 +8,10 @@ interface cont_comp_deleteSingleRes {
 
 // saveSingle()
 interface cont_comp_saveSingleInp {
-    name: string
-    description: string
-    file_name: string
-    image?: string
+    name: mod_componentModel["name"]
+    description: mod_componentModel["description"]
+    file_path: mod_componentModel["file_path"]
+    preview_url?: mod_componentModel["preview_url"]
 }
 interface cont_comp_saveSingleRes {
     saved: boolean,
@@ -21,11 +21,9 @@ interface cont_comp_saveSingleRes {
 
 // updateSingle()
 interface cont_comp_updateSingleInp {
-    file_name?: string
-    name?: string
-    description?: string
-    preview_url?: string
-    fields?: Array<string> // will be changed 
+    name?: mod_componentModel["name"]
+    description?: mod_componentModel["description"]
+    preview_url?: mod_componentModel["preview_url"]
 }
 interface cont_comp_updateSingleRes {
     updated: boolean

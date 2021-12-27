@@ -12,7 +12,7 @@ const writeSingleFile = async (target: string, type: 'json', data: any): Promise
     try {
         if(type === 'json') {
             let writeData = JSON.stringify(data);
-            fs.writeFileSync(directory, writeData);
+            fs.outputFileSync(directory, writeData);
             return true
         }
     }
@@ -27,8 +27,16 @@ const writeSingleFile = async (target: string, type: 'json', data: any): Promise
 // ------------------------------------ ------------------------------------
 const getSingleFileContent = async (target: string, type: 'json') => {
     const directory = path.resolve(themeDir + target);
+    // If file doesnt exist create it
+    let checkFileExists = await verifyFileExists(target);
+    if(!checkFileExists) 
+    {
+        if(type === 'json') {
+            fs.outputFileSync(directory, JSON.stringify([]));
+        }
+    }
+    // Get file data - if empty return empty array if json
     let data = fs.readFileSync(directory);
-
     if(type === 'json') {
         let resData = data.toString();
         if(!resData.length) return [];

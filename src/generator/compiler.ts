@@ -12,23 +12,23 @@ const engine = new Liquid({
 })
 
 // Generate component data
-const __generateDataField = async (fields: Array<mod_pageComponentFieldModel>) => {
+const __generateDataField = async (content_types: Array<gen_generateAppInpComponentFieldModel>) => {
     // TODO
     let response: any = {};
-    for (const field of fields) {
-        response[field.name] = field.data;
+    for (const type of content_types) {
+        response[type.name] = type.data;
     }
     return response;
 }
 
 // Compile page components
-const componentCompiler = async (components: Array<mod_pageComponentModel>): Promise<gene_componentsMap> => {
+const componentCompiler = async (components: Array<gen_generateAppInpComponentModel>): Promise<gene_componentsMap> => {
     try {
         // Create empty component map
         const componentsMap: gene_componentsMap = new Map();
         // Build templates out
         for (const component of components) {
-            const data = await __generateDataField(component.fields); // TODO
+            const data = await __generateDataField(component.content_types); // TODO
             const dir = path.resolve(`${themeDir}/components/${component.file_path}`);
             const output = await engine.renderFile(dir, data);
             componentsMap.set(component.name, {

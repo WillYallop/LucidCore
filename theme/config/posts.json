@@ -1,1 +1,7 @@
-[{"id":"41c05550-59b1-11ec-a836-573ca2acfe97","name":"blogs","template_name":"page.liquid"}]
+[
+    {
+        "id": "41c05550-59b1-11ec-a836-573ca2acfe97",
+        "name": "blogs",
+        "template_name": "page.liquid"
+    }
+]

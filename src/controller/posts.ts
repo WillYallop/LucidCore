@@ -23,19 +23,19 @@ Example posts.json file:
 import { getSingleFileContent, writeSingleFile } from './theme';
 import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
-import { __verifyFieldsToErrorArray } from './helper/shared';
+import { __verifyFieldsToErrorArray, __convertStringLowerUnderscore } from './helper/shared';
 
 
 // ------------------------------------ ------------------------------------
 // add new post type entry
 // ------------------------------------ ------------------------------------
-const addPostType = async (name: string, template_name: string): Promise<cont_post_addPostTypeRes> => {
+const addPostType = async (name: cont_post_postDeclaration["name"], template_name: cont_post_postDeclaration["template_name"]): Promise<cont_post_addPostTypeRes> => {
     // Make sure entry doesnt already exist with same name
     // Verify the template_name exists in the theme/templates directory will always end in a .liquid
     let verifyData = await validate([
         {
             method: 'post_name',
-            value: name
+            value: __convertStringLowerUnderscore(name)
         },
         {
             method: 'temp_verifyFileExists',
@@ -50,12 +50,12 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
         // Get theme/config/posts.json file
         let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
         // Check to see if the post wanting to be added exists:
-        let findPost = postsData.findIndex( x => x.name === name.toLowerCase() && x.template_name === template_name);
+        let findPost = postsData.findIndex( x => x.name === __convertStringLowerUnderscore(name) && x.template_name === template_name);
         if(findPost === -1) {
             // If there is no entry add one
             let postObj: cont_post_postDeclaration = {
                 id: uuidv1(),
-                name: name,
+                name: __convertStringLowerUnderscore(name),
                 template_name: template_name
             };
             postsData.push(postObj);
@@ -72,9 +72,9 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
                 errors: [
                     {
                         code: 403,
-                        origin: 'addPostType',
+                        origin: 'postsController.addPostType',
                         title: 'Post Already Registered',
-                        message: `Post with the name: "${name}" and template_name: "${template_name}" already exist!`
+                        message: `Post with the name: "${__convertStringLowerUnderscore(name)}" and template_name: "${template_name}" already exist!`
                     }
                 ]
             }
@@ -93,7 +93,7 @@ const addPostType = async (name: string, template_name: string): Promise<cont_po
 // ------------------------------------ ------------------------------------
 // remove single post type entry
 // ------------------------------------ ------------------------------------
-const removePostType = async (id: string): Promise<cont_post_removePostTypeRes> => {
+const removePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont_post_removePostTypeRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -120,7 +120,7 @@ const removePostType = async (id: string): Promise<cont_post_removePostTypeRes> 
                 errors: [
                     {
                         code: 404,
-                        origin: 'removePostType',
+                        origin: 'postsController.removePostType',
                         title: 'Post Type Not Found',
                         message: `Cannot delete post with ID: "${id}" because it cannot be found!`
                     }
@@ -141,7 +141,7 @@ const removePostType = async (id: string): Promise<cont_post_removePostTypeRes> 
 // ------------------------------------ ------------------------------------
 // get single post type entry
 // ------------------------------------ ------------------------------------
-const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTypeRes> => {
+const getSinglePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont_post_getSinglePostTypeRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -166,7 +166,7 @@ const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTyp
                 errors: [
                     {
                         code: 404,
-                        origin: 'getSinglePostType',
+                        origin: 'postsController.getSinglePostType',
                         title: 'Post Type Not Found',
                         message: `Cannot get post with ID: "${id}" because it cannot be found!`
                     }
@@ -187,7 +187,7 @@ const getSinglePostType = async (id: string): Promise<cont_post_getSinglePostTyp
 // ------------------------------------ ------------------------------------
 // get multiple post types entries
 // ------------------------------------ ------------------------------------
-const getMultiplePostTypes = async (limit: number, skip: number, all: boolean): Promise<cont_post_getMultiplePostTypeRes> => {
+const getMultiplePostTypes = async (limit?: number, skip?: number, all?: boolean): Promise<cont_post_getMultiplePostTypeRes> => {
     // Get component data
     let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
 
@@ -204,7 +204,7 @@ const getMultiplePostTypes = async (limit: number, skip: number, all: boolean): 
                 errors: [
                     {
                         code: 400,
-                        origin: 'getMultiplePostTypes',
+                        origin: 'postsController.getMultiplePostTypes',
                         title: 'Type Error',
                         message: `Type of limit and skip paramater must be "number"! Not "${typeof limit}" and "${typeof skip}"!`
                     }
@@ -214,7 +214,7 @@ const getMultiplePostTypes = async (limit: number, skip: number, all: boolean): 
         // Process
         else {
             postsData.splice(0, skip);
-            postsData.splice(limit);
+            if(limit != undefined) postsData.splice(limit);
             return {
                 success: true,
                 post_types: postsData

@@ -8,3 +8,8 @@ export const __verifyFieldsToErrorArray = (errors: Array<core_errorMsg>, verifyF
     });
     return errorArray;
 }
+
+// Convert string to lower case and replace spaces with underscores
+export const __convertStringLowerUnderscore = (string: string) => {
+    return string.toLowerCase().replaceAll(' ', '_');
+}

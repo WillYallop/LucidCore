@@ -8,7 +8,7 @@ interface vali_validateFieldResponse {
     errors: Array<core_errorMsg>
 }
 
-type vali_validateFieldMethods = 'comp_name' | 'comp_description' | 'comp_verifyFileExists' | 'uuidVerify' | 'post_name' | 'temp_verifyFileExists' | 'file_isLiquidExtension';
+type vali_validateFieldMethods = 'comp_name' | 'comp_description' | 'comp_verifyFileExists' | 'uuidVerify' | 'post_name' | 'temp_verifyFileExists' | 'file_isLiquidExtension' | 'cont_name' | 'menu_name' | 'menu_linkText';
 interface vali_validateFieldObj {
     value: string,
     method: vali_validateFieldMethods

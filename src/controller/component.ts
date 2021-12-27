@@ -2,13 +2,14 @@ import { getSingleFileContent, writeSingleFile } from './theme';
 import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
 import { __verifyFieldsToErrorArray } from './helper/shared';
+import merge from 'lodash/merge';
 
 
 // ------------------------------------ ------------------------------------
 // delete single component
 // ------------------------------------ ------------------------------------
 // This doesnt remove the component file.liquid, it just unregisteres in from the components collection that stores its info and fields.
-const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
+const deleteSingle = async (id: mod_componentModel["id"]): Promise<cont_comp_deleteSingleRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -34,7 +35,7 @@ const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
                 errors: [
                     {
                         code: 404,
-                        origin: 'deleteSingle',
+                        origin: 'componentController.deleteSingle',
                         title: 'Component Not Found',
                         message: `Cannot delete component with ID: "${id}" because it cannot be found!`
                     }
@@ -57,7 +58,7 @@ const deleteSingle = async (id: string): Promise<cont_comp_deleteSingleRes> => {
 // ------------------------------------ ------------------------------------
 // Handles updating a component, all fields must pass validation first, can pass any amount of value to update
 // TO DO - add validation to the preview_url and fields paramaters
-const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promise<cont_comp_updateSingleRes> => {
+const updateSingle = async (id: mod_componentModel["id"], data: cont_comp_updateSingleInp): Promise<cont_comp_updateSingleRes> => {
     if(Object.entries(data).length) {
         let validateObj: Array<vali_validateFieldObj> = [
             {
@@ -82,6 +83,10 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
                     });
                     break;
                 }
+                case 'preview_url': {
+
+                    break;
+                }
             }
         }
         // Validate
@@ -95,7 +100,7 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
             let findCompIndex = componentData.findIndex( x => x.id === id );
             if(findCompIndex != -1) {
                 // Update object and save
-                let newCompObj: mod_componentModel = {...componentData[findCompIndex], ...data};
+                let newCompObj: mod_componentModel = merge(componentData[findCompIndex], data);
                 componentData[findCompIndex] = newCompObj;
                 let response = await writeSingleFile('/config/components.json', 'json', componentData);
                 return {
@@ -109,7 +114,7 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
                     errors: [
                         {
                             code: 404,
-                            origin: 'updateSingle',
+                            origin: 'componentController.updateSingle',
                             title: 'Component Not Found',
                             message: `Cannot find component with ID: "${id}" to update!`
                         }
@@ -132,7 +137,7 @@ const updateSingle = async (id: string, data: cont_comp_updateSingleInp): Promis
             errors: [
                 {
                     code: 403,
-                    origin: 'updateSingle',
+                    origin: 'componentController.updateSingle',
                     title: 'No Paramaters',
                     message: 'No paramaters passed to componentController.updateSingle() function!'
                 }
@@ -158,26 +163,26 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
         },
         {
             method: 'comp_verifyFileExists',
-            value: data.file_name
-        }
+            value: data.file_path
+        },
     ]);
     // Validate input data
     if(verifyData.valid) {
         // theme/components.json
         let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
         // Make sure it doesnt exist, else throw
-        let findComponent = componentData.findIndex( x => x.file_name === data.file_name );
+        let findComponent = componentData.findIndex( x => x.file_path === data.file_path );
         if(findComponent === -1) {
             // Base component object
             let componentObj: mod_componentModel = {
                 id: uuidv1(),
-                file_name: data.file_name,
+                file_name: data.file_path.replace(/^.*[\\\/]/, ''),
+                file_path: data.file_path,
                 name: data.name,
                 description: data.description,
                 preview_url: '',
                 date_added: new Date().toString(),
-                date_modified: new Date().toString(),
-                fields: []
+                date_modified: new Date().toString()
             }
             // Add to array and save
             componentData.push(componentObj);
@@ -193,9 +198,9 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
                 errors: [
                     {
                         code: 403,
-                        origin: 'saveSingle',
+                        origin: 'componentController.saveSingle',
                         title: 'Component Already Registered',
-                        message: `Component with the file_name: "${data.file_name}" has already been registered. Please use the componentController.updateSingle() function!`
+                        message: `Component with the file_path: "${data.file_path}" has already been registered. Please use the componentController.updateSingle() function!`
                     }
                 ]
             }
@@ -215,7 +220,7 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
 // ------------------------------------ ------------------------------------
 // get single component
 // ------------------------------------ ------------------------------------
-const getSingleByID = async (id: string): Promise<cont_comp_getSingleByIDRes> => {
+const getSingleByID = async (id: mod_componentModel["id"]): Promise<cont_comp_getSingleByIDRes> => {
     // Verify ID
     // Get component data
     // Return component
@@ -241,7 +246,7 @@ const getSingleByID = async (id: string): Promise<cont_comp_getSingleByIDRes> =>
                 errors: [
                     {
                         code: 404,
-                        origin: 'getSingleByID',
+                        origin: 'componentController.getSingleByID',
                         title: 'Component Not Found',
                         message: `Cannot get component with ID: "${id}" because it cannot be found!`
                     }
@@ -274,7 +279,7 @@ const getMultiple = async (limit: number, skip: number): Promise<cont_comp_getMu
             errors: [
                 {
                     code: 400,
-                    origin: 'getMultiple',
+                    origin: 'componentController.getMultiple',
                     title: 'Type Error',
                     message: `Type of limit and skip paramater must be "number"! Not "${typeof limit}" and "${typeof skip}"!`
                 }
