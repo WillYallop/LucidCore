@@ -32,3 +32,8 @@ interface cont_cont_updateSingleInp {
     type?: mod_contentTypesConfigModel["type"]
     config?: mod_contentTypesConfigModel["config"]
 }
+interface cont_cont_updateSingleRes {
+    updated: boolean
+    content_type?: mod_contentTypesConfigModel
+    errors?: Array<core_errorMsg> 
+}
