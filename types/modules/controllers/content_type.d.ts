@@ -19,6 +19,13 @@ interface cont_cont_getAllRes {
     errors?: Array<core_errorMsg>
 }
 
+// getSingle()
+interface cont_cont_getSingleRes {
+    success: boolean
+    content_type?: mod_contentTypesConfigModel
+    errors?: Array<core_errorMsg>
+}
+
 // deleteSingle()
 interface cont_cont_deleteSingleRes {
     deleted: boolean

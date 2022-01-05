@@ -112,6 +112,52 @@ const getAll = async (componentID: mod_componentModel["_id"]): Promise<cont_cont
     }
 }
 
+const getSingle = async (componentID: mod_componentModel["_id"], _id: mod_contentTypesConfigModel["_id"]): Promise<cont_cont_getSingleRes> => {
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: componentID
+        },
+        {
+            method: 'uuidVerify',
+            value: _id
+        }
+    ]);
+    if (verifyData.valid) {
+        let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
+        // Find single
+        let findContentType = contentTypeFileData.find( x => x._id === _id);
+        if(findContentType) 
+        {
+            return {
+                success: true,
+                content_type: findContentType
+            }
+        }
+        else {
+            return {
+                success: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'contentTypeController.getSingle',
+                        title: 'Content Type Not Found',
+                        message: `Cannot find content type with ID: "${_id}" for component with ID: "${componentID}"!`
+                    }
+                ]
+            }
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            success: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
+}
+
 // ------------------------------------ ------------------------------------
 // delete single component content type
 // ------------------------------------ ------------------------------------
@@ -275,6 +321,7 @@ const updateSingle = async (componentID: mod_componentModel["_id"], contentType:
 export {
     saveSingle,
     getAll,
+    getSingle,
     deleteSingle,
     updateSingle
 }
