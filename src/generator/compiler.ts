@@ -32,7 +32,7 @@ const componentCompiler = async (components: Array<gen_generateAppInpComponentMo
             const dir = path.resolve(`${themeDir}/components/${component.file_path}`);
             const output = await engine.renderFile(dir, data);
             componentsMap.set(component.name, {
-                id: component.id,
+                _id: component._id,
                 markup: output
             });
         }

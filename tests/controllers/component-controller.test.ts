@@ -64,7 +64,7 @@ test('Test if updateSingle updates component in theme/config/components.json', a
 
     // Test update works and verify
     if(newComponentRes.component != undefined) {
-        let newCompID = newComponentRes.component.id;
+        let newCompID = newComponentRes.component._id;
 
         const componentUpdateRes2 = await componentController.updateSingle(newCompID, {
             name: 'Test name two',
@@ -78,7 +78,7 @@ test('Test if updateSingle updates component in theme/config/components.json', a
         const fileRes = fs.readFileSync(directory);
         const data: Array<mod_componentModel> = JSON.parse(fileRes.toString());
 
-        let component = data.find( x => x.id === newCompID);
+        let component = data.find( x => x._id === newCompID);
         expect(component).toEqual(componentUpdateRes2.component);
     }
 });
@@ -102,7 +102,7 @@ test('Test if deleteSingle delete single component from theme/config/components.
 
     if(newComponentRes.component != undefined) {
         // Test - should work
-        const componentDeleteRes2 = await componentController.deleteSingle(newComponentRes.component.id);
+        const componentDeleteRes2 = await componentController.deleteSingle(newComponentRes.component._id);
         expect(componentDeleteRes2.deleted).toBe(true);
     }
 

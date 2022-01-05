@@ -3,18 +3,31 @@
 
 // Page Model 
 interface mod_pageModel {
-    id: string
+    _id: string
     template: string
     slug: string
     name: string
     seo: {
+        _id: string
+        page_id: mod_pageModel["_id"]
         title: string
         description: string
+        og_title: string
+        og_description: string
+        og_image: string
     }
-    components: Array<mod_pageModelComponent>
+    components: Array<mod_pageModelComponent>,
+    type: 'page' | 'post'
+    post_name: string
+    has_parent: boolean
+    parent_id: string
+    date_created: string
+    last_edited: string
+    author: string
+    is_homepage: boolean
 }
 interface mod_pageModelComponent {
-    id: mod_componentModel["id"]
+    _id: mod_componentModel["_id"]
     file_name: mod_componentModel["file_name"]
     file_path: mod_componentModel["file_path"]
     name: mod_componentModel["name"]
@@ -25,10 +38,12 @@ interface mod_pageModelComponent {
     content_types: Array<mod_pageModelComponentContentType>
 }
 interface mod_pageModelComponentContentType {
-    id: mod_contentTypesDatabaseModel["id"]
-    config_id: mod_contentTypesConfigModel["id"]
+    config_id: mod_contentTypesConfigModel["_id"]
     name: mod_contentTypesConfigModel["name"]
     type: mod_contentTypesConfigModel["type"]
     config: mod_contentTypesConfigModel["config"]
-    data: mod_contentTypesDatabaseModel["data"]
+    content_type_data: {
+        _id: string
+        data: string
+    }
 }

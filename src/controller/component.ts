@@ -9,18 +9,18 @@ import merge from 'lodash/merge';
 // delete single component
 // ------------------------------------ ------------------------------------
 // This doesnt remove the component file.liquid, it just unregisteres in from the components collection that stores its info and fields.
-const deleteSingle = async (id: mod_componentModel["id"]): Promise<cont_comp_deleteSingleRes> => {
+const deleteSingle = async (_id: mod_componentModel["_id"]): Promise<cont_comp_deleteSingleRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
             method: 'uuidVerify',
-            value: id
+            value: _id
         }
     ]);
     if(verifyData.valid) {
         // theme/components.json
         let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
-        let componentIndex = componentData.findIndex( x => x.id === id);
+        let componentIndex = componentData.findIndex( x => x._id === _id);
         if(componentIndex != -1) {
             // Remove from array and write to file
             componentData.splice(componentIndex, 1);
@@ -37,7 +37,7 @@ const deleteSingle = async (id: mod_componentModel["id"]): Promise<cont_comp_del
                         code: 404,
                         origin: 'componentController.deleteSingle',
                         title: 'Component Not Found',
-                        message: `Cannot delete component with ID: "${id}" because it cannot be found!`
+                        message: `Cannot delete component with ID: "${_id}" because it cannot be found!`
                     }
                 ]
             }
@@ -58,12 +58,12 @@ const deleteSingle = async (id: mod_componentModel["id"]): Promise<cont_comp_del
 // ------------------------------------ ------------------------------------
 // Handles updating a component, all fields must pass validation first, can pass any amount of value to update
 // TO DO - add validation to the preview_url and fields paramaters
-const updateSingle = async (id: mod_componentModel["id"], data: cont_comp_updateSingleInp): Promise<cont_comp_updateSingleRes> => {
+const updateSingle = async (_id: mod_componentModel["_id"], data: cont_comp_updateSingleInp): Promise<cont_comp_updateSingleRes> => {
     if(Object.entries(data).length) {
         let validateObj: Array<vali_validateFieldObj> = [
             {
                 method: 'uuidVerify',
-                value: id
+                value: _id
             }
         ];
         // Build out the validate object
@@ -97,7 +97,7 @@ const updateSingle = async (id: mod_componentModel["id"], data: cont_comp_update
             let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
 
             // Make sure it exists elseo throw
-            let findCompIndex = componentData.findIndex( x => x.id === id );
+            let findCompIndex = componentData.findIndex( x => x._id === _id );
             if(findCompIndex != -1) {
                 // Update object and save
                 let newCompObj: mod_componentModel = merge(componentData[findCompIndex], data);
@@ -116,7 +116,7 @@ const updateSingle = async (id: mod_componentModel["id"], data: cont_comp_update
                             code: 404,
                             origin: 'componentController.updateSingle',
                             title: 'Component Not Found',
-                            message: `Cannot find component with ID: "${id}" to update!`
+                            message: `Cannot find component with ID: "${_id}" to update!`
                         }
                     ]
                 }
@@ -175,7 +175,7 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
         if(findComponent === -1) {
             // Base component object
             let componentObj: mod_componentModel = {
-                id: uuidv1(),
+                _id: uuidv1(),
                 file_name: data.file_path.replace(/^.*[\\\/]/, ''),
                 file_path: data.file_path,
                 name: data.name,
@@ -220,20 +220,20 @@ const saveSingle = async (data: cont_comp_saveSingleInp): Promise<cont_comp_save
 // ------------------------------------ ------------------------------------
 // get single component
 // ------------------------------------ ------------------------------------
-const getSingleByID = async (id: mod_componentModel["id"]): Promise<cont_comp_getSingleByIDRes> => {
+const getSingleByID = async (_id: mod_componentModel["_id"]): Promise<cont_comp_getSingleByIDRes> => {
     // Verify ID
     // Get component data
     // Return component
     let verifyData = await validate([
         {
             method: 'uuidVerify',
-            value: id
+            value: _id
         }
     ]);
     if(verifyData.valid) {
 
         let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
-        let findComponent = componentData.find( x => x.id === id );
+        let findComponent = componentData.find( x => x._id === _id );
         if(findComponent) {
             return {
                 success: true,
@@ -248,7 +248,7 @@ const getSingleByID = async (id: mod_componentModel["id"]): Promise<cont_comp_ge
                         code: 404,
                         origin: 'componentController.getSingleByID',
                         title: 'Component Not Found',
-                        message: `Cannot get component with ID: "${id}" because it cannot be found!`
+                        message: `Cannot get component with ID: "${_id}" because it cannot be found!`
                     }
                 ]
             }

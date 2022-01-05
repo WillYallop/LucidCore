@@ -27,7 +27,7 @@ interface cont_cont_deleteSingleRes {
 
 // updateSingle()
 interface cont_cont_updateSingleInp {
-    id: mod_contentTypesConfigModel["id"]
+    _id: mod_contentTypesConfigModel["_id"]
     name?: mod_contentTypesConfigModel["name"]
     type?: mod_contentTypesConfigModel["type"]
     config?: mod_contentTypesConfigModel["config"]

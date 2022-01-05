@@ -7,7 +7,7 @@ import merge from 'lodash/merge';
 // ------------------------------------ ------------------------------------
 // save single component content type
 // ------------------------------------ ------------------------------------
-const saveSingle = async (componentID: mod_componentModel["id"], contentType: cont_cont_saveSingleInp): Promise<cont_cont_saveSingleRes> => {
+const saveSingle = async (componentID: mod_componentModel["_id"], contentType: cont_cont_saveSingleInp): Promise<cont_cont_saveSingleRes> => {
     // Check if file ith component ID exists in theme/config/content_types and save a single component content type object to it
     // Else create the file and save a single component content type object to it
     let verifyData = await validate([
@@ -22,12 +22,12 @@ const saveSingle = async (componentID: mod_componentModel["id"], contentType: co
     ]);
     if (verifyData.valid) {
         let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
-        let findComponent = componentData.find(x => x.id === componentID);
+        let findComponent = componentData.find(x => x._id === componentID);
         if (findComponent) {
 
             // Create the content type object 
             let contentTypeObj: mod_contentTypesConfigModel = {
-                id: uuidv1(),
+                _id: uuidv1(),
                 name: __convertStringLowerUnderscore(contentType.name),
                 type: contentType.type,
                 config: contentType.config
@@ -88,7 +88,7 @@ const saveSingle = async (componentID: mod_componentModel["id"], contentType: co
 // ------------------------------------ ------------------------------------
 // get all component content types data
 // ------------------------------------ ------------------------------------
-const getAll = async (componentID: mod_componentModel["id"]): Promise<cont_cont_getAllRes> => {
+const getAll = async (componentID: mod_componentModel["_id"]): Promise<cont_cont_getAllRes> => {
     let verifyData = await validate([
         {
             method: 'uuidVerify',
@@ -115,7 +115,7 @@ const getAll = async (componentID: mod_componentModel["id"]): Promise<cont_cont_
 // ------------------------------------ ------------------------------------
 // delete single component content type
 // ------------------------------------ ------------------------------------
-const deleteSingle = async (componentID: mod_componentModel["id"], contentTypeID: mod_contentTypesConfigModel["id"]): Promise<cont_cont_deleteSingleRes> => {
+const deleteSingle = async (componentID: mod_componentModel["_id"], contentTypeID: mod_contentTypesConfigModel["_id"]): Promise<cont_cont_deleteSingleRes> => {
     let verifyData = await validate([
         {
             method: 'uuidVerify',
@@ -128,7 +128,7 @@ const deleteSingle = async (componentID: mod_componentModel["id"], contentTypeID
     ]);
     if (verifyData.valid) {
         let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
-        let findContentTypeIndex = contentTypeFileData.findIndex(x => x.id === contentTypeID);
+        let findContentTypeIndex = contentTypeFileData.findIndex(x => x._id === contentTypeID);
         if (findContentTypeIndex != -1) {
             // Remove from array and write to file
             contentTypeFileData.splice(findContentTypeIndex, 1);
@@ -164,7 +164,7 @@ const deleteSingle = async (componentID: mod_componentModel["id"], contentTypeID
 // ------------------------------------ ------------------------------------
 // update single component content type
 // ------------------------------------ ------------------------------------
-const updateSingle = async (componentID: mod_componentModel["id"], contentType: cont_cont_updateSingleInp): Promise<cont_cont_updateSingleRes> => {
+const updateSingle = async (componentID: mod_componentModel["_id"], contentType: cont_cont_updateSingleInp): Promise<cont_cont_updateSingleRes> => {
     if (Object.entries(contentType).length) {
         // Base validation object
         let validateObj: Array<vali_validateFieldObj> = [
@@ -174,7 +174,7 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
             },
             {
                 method: 'uuidVerify',
-                value: contentType.id
+                value: contentType._id
             }
         ];
         // Build out the validate object
@@ -203,11 +203,11 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
         // Update data
         if (verifyData.valid) {
             let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
-            let findContentTypeIndex = contentTypeFileData.findIndex(x => x.id === contentType.id);
+            let findContentTypeIndex = contentTypeFileData.findIndex(x => x._id === contentType._id);
             if (findContentTypeIndex != -1) {
                 // Check object with same name doesnt exists - this has to be unique!
                 if(contentType.name != undefined) {
-                    let nameExistsIndex = contentTypeFileData.findIndex( x => x.name ===  contentType.name && x.id != contentType.id );
+                    let nameExistsIndex = contentTypeFileData.findIndex( x => x.name ===  contentType.name && x._id != contentType._id );
                     if(nameExistsIndex != -1) {
                         // Exists
                         return {
@@ -240,7 +240,7 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
                             code: 404,
                             origin: 'contentTypeController.updateSingle',
                             title: 'Content Type Not Found',
-                            message: `Cannot find content type with ID: "${contentType.id}" for component ID: "${componentID}" to update!`
+                            message: `Cannot find content type with ID: "${contentType._id}" for component ID: "${componentID}" to update!`
                         }
                     ]
                 }

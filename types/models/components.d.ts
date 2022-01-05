@@ -2,7 +2,7 @@
 
 // Component Model
 interface mod_componentModel {
-    id: string
+    _id: string
     file_name: string
     file_path: string
     name: string

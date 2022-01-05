@@ -54,7 +54,7 @@ const addPostType = async (name: cont_post_postDeclaration["name"], template_nam
         if(findPost === -1) {
             // If there is no entry add one
             let postObj: cont_post_postDeclaration = {
-                id: uuidv1(),
+                _id: uuidv1(),
                 name: __convertStringLowerUnderscore(name),
                 template_name: template_name
             };
@@ -93,19 +93,19 @@ const addPostType = async (name: cont_post_postDeclaration["name"], template_nam
 // ------------------------------------ ------------------------------------
 // remove single post type entry
 // ------------------------------------ ------------------------------------
-const removePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont_post_removePostTypeRes> => {
+const removePostType = async (_id: cont_post_postDeclaration["_id"]): Promise<cont_post_removePostTypeRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
             method: 'uuidVerify',
-            value: id
+            value: _id
         }
     ]);
     if(verifyData.valid) {
         // Get post data
         let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
         // Check if it exists and get index
-        let postIndex = postsData.findIndex( x => x.id === id );
+        let postIndex = postsData.findIndex( x => x._id === _id );
         if(postIndex != -1) {
             // Remove from array and write
             postsData.splice(postIndex, 1);
@@ -122,7 +122,7 @@ const removePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont
                         code: 404,
                         origin: 'postsController.removePostType',
                         title: 'Post Type Not Found',
-                        message: `Cannot delete post with ID: "${id}" because it cannot be found!`
+                        message: `Cannot delete post with ID: "${_id}" because it cannot be found!`
                     }
                 ]
             }
@@ -141,19 +141,19 @@ const removePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont
 // ------------------------------------ ------------------------------------
 // get single post type entry
 // ------------------------------------ ------------------------------------
-const getSinglePostType = async (id: cont_post_postDeclaration["id"]): Promise<cont_post_getSinglePostTypeRes> => {
+const getSinglePostType = async (_id: cont_post_postDeclaration["_id"]): Promise<cont_post_getSinglePostTypeRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
             method: 'uuidVerify',
-            value: id
+            value: _id
         }
     ]);
     if(verifyData.valid) {
         // Get post data
         let postsData: Array<cont_post_postDeclaration> = await getSingleFileContent('/config/posts.json', 'json');
         // Check if it exists and get it
-        let post = postsData.find( x => x.id === id );
+        let post = postsData.find( x => x._id === _id );
         if(post != undefined) {
             return {
                 found: true,
@@ -168,7 +168,7 @@ const getSinglePostType = async (id: cont_post_postDeclaration["id"]): Promise<c
                         code: 404,
                         origin: 'postsController.getSinglePostType',
                         title: 'Post Type Not Found',
-                        message: `Cannot get post with ID: "${id}" because it cannot be found!`
+                        message: `Cannot get post with ID: "${_id}" because it cannot be found!`
                     }
                 ]
             }
