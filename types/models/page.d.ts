@@ -42,8 +42,5 @@ interface mod_pageModelComponentContentType {
     name: mod_contentTypesConfigModel["name"]
     type: mod_contentTypesConfigModel["type"]
     config: mod_contentTypesConfigModel["config"]
-    content_type_data: {
-        _id: string
-        data: string
-    }
+    data: string
 }
