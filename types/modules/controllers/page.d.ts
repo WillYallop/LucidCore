@@ -23,6 +23,7 @@ interface cont_page_updateSingleInp {
     is_homepage?: mod_pageModel["is_homepage"]
 }
 interface const_page_updatePageObj {
+    _id: mod_pageModel["_id"] | any
     last_edited: mod_pageModel["last_edited"]
     template?: mod_pageModel["template"]
     slug?: mod_pageModel["slug"]
