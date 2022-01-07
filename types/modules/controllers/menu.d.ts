@@ -21,7 +21,7 @@ interface cont_menu_createMenuRes {
 interface cont_menu_updateMenuInp {
     name?: mod_menuModel["name"],
     links?: Array<{
-        id: mod_menuModelLinks["id"] 
+        _id: mod_menuModelLinks["_id"] 
         text?: mod_menuModelLinks["text"]
         blank?: mod_menuModelLinks["blank"]
         page_id?: mod_menuModelLinks["page_id"]

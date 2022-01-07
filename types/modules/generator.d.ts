@@ -2,7 +2,7 @@
 
 
 interface gen_generateAppInp {
-    id: mod_pageModel["id"]
+    _id: mod_pageModel["_id"]
     template: mod_pageModel["template"]
     slug: mod_pageModel["slug"]
     name: mod_pageModel["name"]
@@ -14,7 +14,7 @@ interface gen_generateAppInp {
 }
 
 interface gen_generateAppInpComponentModel {
-    id: mod_componentModel["id"]
+    _id: mod_componentModel["_id"]
     file_name: mod_componentModel["file_name"]
     file_path: mod_componentModel["file_path"]
     name: mod_componentModel["name"]
@@ -33,7 +33,7 @@ type gene_templatesMap = Map<string, {
 // Component Compiler Res Map
 // generateComponents 
 type gene_componentsMap = Map<string, {
-    id: string
+    _id: string
     markup: string
 }>
 

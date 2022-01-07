@@ -1,7 +1,7 @@
 // Key: cont_post_
 
 interface cont_post_postDeclaration {
-    id: string
+    _id: string
     name: string
     template_name: string
 }

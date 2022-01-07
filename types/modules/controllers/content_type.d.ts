@@ -19,6 +19,13 @@ interface cont_cont_getAllRes {
     errors?: Array<core_errorMsg>
 }
 
+// getSingle()
+interface cont_cont_getSingleRes {
+    success: boolean
+    content_type?: mod_contentTypesConfigModel
+    errors?: Array<core_errorMsg>
+}
+
 // deleteSingle()
 interface cont_cont_deleteSingleRes {
     deleted: boolean
@@ -27,8 +34,13 @@ interface cont_cont_deleteSingleRes {
 
 // updateSingle()
 interface cont_cont_updateSingleInp {
-    id: mod_contentTypesConfigModel["id"]
+    _id: mod_contentTypesConfigModel["_id"]
     name?: mod_contentTypesConfigModel["name"]
     type?: mod_contentTypesConfigModel["type"]
     config?: mod_contentTypesConfigModel["config"]
+}
+interface cont_cont_updateSingleRes {
+    updated: boolean
+    content_type?: mod_contentTypesConfigModel
+    errors?: Array<core_errorMsg> 
 }

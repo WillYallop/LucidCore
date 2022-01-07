@@ -6,25 +6,25 @@
 
     [
         {
-            "id": "123-456",
+            "_id": "123-456",
             "name": "header_name",
             "links": [
                 {
-                    "id": "123-456",
+                    "_id": "123-456",
                     "text": "Home Page",
                     "blank": false,
                     "page_id": "123-456",
                     "external": false
                 },
                 {
-                    "id": "123-456",
+                    "_id": "123-456",
                     "text": "Blog Page",
                     "blank": false,
                     "page_id": "2234-45264",
                     "external": false
                 },
                 {
-                    "id": "123-456",
+                    "_id": "123-456",
                     "text": "App",
                     "blank": true,
                     "external": true
@@ -67,7 +67,7 @@ const createMenu = async (menuData: cont_menu_createMenuInp): Promise<cont_menu_
                 })
             };
             let linkItem: mod_menuModelLinks = {
-                id: uuidv1(),
+                _id: uuidv1(),
                 text: link.text || '',
                 blank: link.blank || false,
                 external: link.external || false
@@ -92,7 +92,7 @@ const createMenu = async (menuData: cont_menu_createMenuInp): Promise<cont_menu_
         if(findMatchingMenuName === -1) {
             // Doesnt exist - save
             let newMenuObj: mod_menuModel = {
-                id: uuidv1(),
+                _id: uuidv1(),
                 name: __convertStringLowerUnderscore(menuData.name),
                 links: menuLinksArray
             };
@@ -131,7 +131,7 @@ const createMenu = async (menuData: cont_menu_createMenuInp): Promise<cont_menu_
 // ------------------------------------ ------------------------------------
 // responsible for updating item from a menu
 // ------------------------------------ ------------------------------------
-const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updateMenuInp): Promise<cont_menu_updateMenuRes> => {
+const updateMenu = async (menuID: mod_menuModel["_id"], menuData: cont_menu_updateMenuInp): Promise<cont_menu_updateMenuRes> => {
     // Verify ID and if we have it: the name of the menu
     // Get corresponding menu
     // Update name / loop over links to find one matching our input and merge them
@@ -153,7 +153,7 @@ const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updat
         // Get menu config file
         let menuConfigData: Array<mod_menuModel> = await getSingleFileContent('/config/menus.json', 'json');
         // Find corresponding menu
-        let findMenu = menuConfigData.find( x => x.id === menuID );
+        let findMenu = menuConfigData.find( x => x._id === menuID );
         if(findMenu) {
             // Update name
             findMenu.name = __convertStringLowerUnderscore(menuData.name || findMenu.name);
@@ -162,7 +162,7 @@ const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updat
                 menuData.links.forEach((link) => {
                     // Find link index via id
                     if(findMenu) { // beacuse typescript threw error otherwise..
-                        let linkIndex = findMenu.links.findIndex( x => x.id === link.id );
+                        let linkIndex = findMenu.links.findIndex( x => x._id === link._id );
                         if(linkIndex != -1) {
                             let newLinkObj = merge(findMenu.links[linkIndex], link);
                             // Depending on if external or not, only save either page_id or external_url
@@ -209,7 +209,7 @@ const updateMenu = async (menuID: mod_menuModel["id"], menuData: cont_menu_updat
 // ------------------------------------ ------------------------------------
 // responsible for updating item from a menu
 // ------------------------------------ ------------------------------------
-const deleteMenu = async (menuID: mod_menuModel["id"]): Promise<cont_menu_deleteMenuRes> => {
+const deleteMenu = async (menuID: mod_menuModel["_id"]): Promise<cont_menu_deleteMenuRes> => {
     // Validate the ID
     let verifyData = await validate([
         {
@@ -220,7 +220,7 @@ const deleteMenu = async (menuID: mod_menuModel["id"]): Promise<cont_menu_delete
     if(verifyData.valid) {
         // theme/components.json
         let menuConfigData: Array<mod_menuModel> = await getSingleFileContent('/config/menus.json', 'json');
-        let menuIndex = menuConfigData.findIndex( x => x.id === menuID);
+        let menuIndex = menuConfigData.findIndex( x => x._id === menuID);
         if(menuIndex != -1) {
             // Remove from array and write to file
             menuConfigData.splice(menuIndex, 1);

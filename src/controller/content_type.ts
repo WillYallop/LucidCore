@@ -1,13 +1,13 @@
 import { getSingleFileContent, writeSingleFile } from './theme';
 import validate from '../validator';
 import { v1 as uuidv1 } from 'uuid';
-import { __verifyFieldsToErrorArray } from './helper/shared';
+import { __verifyFieldsToErrorArray, __convertStringLowerUnderscore } from './helper/shared';
 import merge from 'lodash/merge';
 
 // ------------------------------------ ------------------------------------
 // save single component content type
 // ------------------------------------ ------------------------------------
-const saveSingle = async (componentID: mod_componentModel["id"], contentType: cont_cont_saveSingleInp): Promise<cont_cont_saveSingleRes> => {
+const saveSingle = async (componentID: mod_componentModel["_id"], contentType: cont_cont_saveSingleInp): Promise<cont_cont_saveSingleRes> => {
     // Check if file ith component ID exists in theme/config/content_types and save a single component content type object to it
     // Else create the file and save a single component content type object to it
     let verifyData = await validate([
@@ -17,18 +17,18 @@ const saveSingle = async (componentID: mod_componentModel["id"], contentType: co
         },
         {
             method: 'cont_name',
-            value: contentType.name // only the contentType.name is user inputted, so we assume the rest is correct
+            value: __convertStringLowerUnderscore(contentType.name) // only the contentType.name is user inputted, so we assume the rest is correct
         }
     ]);
     if (verifyData.valid) {
         let componentData: Array<mod_componentModel> = await getSingleFileContent('/config/components.json', 'json');
-        let findComponent = componentData.find(x => x.id === componentID);
+        let findComponent = componentData.find(x => x._id === componentID);
         if (findComponent) {
 
             // Create the content type object 
             let contentTypeObj: mod_contentTypesConfigModel = {
-                id: uuidv1(),
-                name: contentType.name.toLowerCase(),
+                _id: uuidv1(),
+                name: __convertStringLowerUnderscore(contentType.name),
                 type: contentType.type,
                 config: contentType.config
             };
@@ -54,7 +54,7 @@ const saveSingle = async (componentID: mod_componentModel["id"], contentType: co
                             code: 403,
                             origin: 'contentTypeController.saveSingle',
                             title: 'Content Type Name Taken',
-                            message: `Content type with name "${contentType.name}" has already been registered.`
+                            message: `Content type with name "${__convertStringLowerUnderscore(contentType.name)}" has already been registered.`
                         }
                     ]
                 }
@@ -88,7 +88,7 @@ const saveSingle = async (componentID: mod_componentModel["id"], contentType: co
 // ------------------------------------ ------------------------------------
 // get all component content types data
 // ------------------------------------ ------------------------------------
-const getAll = async (componentID: mod_componentModel["id"]): Promise<cont_cont_getAllRes> => {
+const getAll = async (componentID: mod_componentModel["_id"]): Promise<cont_cont_getAllRes> => {
     let verifyData = await validate([
         {
             method: 'uuidVerify',
@@ -112,10 +112,56 @@ const getAll = async (componentID: mod_componentModel["id"]): Promise<cont_cont_
     }
 }
 
+const getSingle = async (componentID: mod_componentModel["_id"], _id: mod_contentTypesConfigModel["_id"]): Promise<cont_cont_getSingleRes> => {
+    let verifyData = await validate([
+        {
+            method: 'uuidVerify',
+            value: componentID
+        },
+        {
+            method: 'uuidVerify',
+            value: _id
+        }
+    ]);
+    if (verifyData.valid) {
+        let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
+        // Find single
+        let findContentType = contentTypeFileData.find( x => x._id === _id);
+        if(findContentType) 
+        {
+            return {
+                success: true,
+                content_type: findContentType
+            }
+        }
+        else {
+            return {
+                success: false,
+                errors: [
+                    {
+                        code: 404,
+                        origin: 'contentTypeController.getSingle',
+                        title: 'Content Type Not Found',
+                        message: `Cannot find content type with ID: "${_id}" for component with ID: "${componentID}"!`
+                    }
+                ]
+            }
+        }
+    }
+    else {
+        // Define custom errors
+        let errors: Array<core_errorMsg> = [];
+        return {
+            success: false,
+            errors: __verifyFieldsToErrorArray(errors, verifyData.fields)
+        }
+    }
+}
+
 // ------------------------------------ ------------------------------------
 // delete single component content type
 // ------------------------------------ ------------------------------------
-const deleteSingle = async (componentID: mod_componentModel["id"], contentTypeID: mod_contentTypesConfigModel["id"]): Promise<cont_cont_deleteSingleRes> => {
+const deleteSingle = async (componentID: mod_componentModel["_id"], contentTypeID: mod_contentTypesConfigModel["_id"]): Promise<cont_cont_deleteSingleRes> => {
     let verifyData = await validate([
         {
             method: 'uuidVerify',
@@ -128,7 +174,7 @@ const deleteSingle = async (componentID: mod_componentModel["id"], contentTypeID
     ]);
     if (verifyData.valid) {
         let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
-        let findContentTypeIndex = contentTypeFileData.findIndex(x => x.id === contentTypeID);
+        let findContentTypeIndex = contentTypeFileData.findIndex(x => x._id === contentTypeID);
         if (findContentTypeIndex != -1) {
             // Remove from array and write to file
             contentTypeFileData.splice(findContentTypeIndex, 1);
@@ -164,7 +210,7 @@ const deleteSingle = async (componentID: mod_componentModel["id"], contentTypeID
 // ------------------------------------ ------------------------------------
 // update single component content type
 // ------------------------------------ ------------------------------------
-const updateSingle = async (componentID: mod_componentModel["id"], contentType: cont_cont_updateSingleInp) => {
+const updateSingle = async (componentID: mod_componentModel["_id"], contentType: cont_cont_updateSingleInp): Promise<cont_cont_updateSingleRes> => {
     if (Object.entries(contentType).length) {
         // Base validation object
         let validateObj: Array<vali_validateFieldObj> = [
@@ -174,7 +220,7 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
             },
             {
                 method: 'uuidVerify',
-                value: contentType.id
+                value: contentType._id
             }
         ];
         // Build out the validate object
@@ -183,7 +229,7 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
                 case 'name': {
                     validateObj.push({
                         method: 'cont_name',
-                        value: value
+                        value: __convertStringLowerUnderscore(value)
                     });
                     break;
                 }
@@ -197,16 +243,17 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
                 }
             }
         }
+        if(contentType.name) contentType.name = __convertStringLowerUnderscore(contentType.name);
         // Validate
         let verifyData = await validate(validateObj);
         // Update data
         if (verifyData.valid) {
             let contentTypeFileData: Array<mod_contentTypesConfigModel> = await getSingleFileContent(`/config/content_types/${componentID}.json`, 'json');
-            let findContentTypeIndex = contentTypeFileData.findIndex(x => x.id === contentType.id);
+            let findContentTypeIndex = contentTypeFileData.findIndex(x => x._id === contentType._id);
             if (findContentTypeIndex != -1) {
                 // Check object with same name doesnt exists - this has to be unique!
                 if(contentType.name != undefined) {
-                    let nameExistsIndex = contentTypeFileData.findIndex( x => x.name === contentType.name && x.id != contentType.id );
+                    let nameExistsIndex = contentTypeFileData.findIndex( x => x.name ===  contentType.name && x._id != contentType._id );
                     if(nameExistsIndex != -1) {
                         // Exists
                         return {
@@ -228,7 +275,7 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
                 let response = await writeSingleFile(`/config/content_types/${componentID}.json`, 'json', contentTypeFileData);
                 return {
                     updated: response,
-                    component: contentTypeFileData[findContentTypeIndex]
+                    content_type: contentTypeFileData[findContentTypeIndex]
                 }
             }
             else {
@@ -239,7 +286,7 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
                             code: 404,
                             origin: 'contentTypeController.updateSingle',
                             title: 'Content Type Not Found',
-                            message: `Cannot find content type with ID: "${contentType.id}" for component ID: "${componentID}" to update!`
+                            message: `Cannot find content type with ID: "${contentType._id}" for component ID: "${componentID}" to update!`
                         }
                     ]
                 }
@@ -269,9 +316,12 @@ const updateSingle = async (componentID: mod_componentModel["id"], contentType: 
     }
 }
 
+
+
 export {
     saveSingle,
     getAll,
+    getSingle,
     deleteSingle,
     updateSingle
 }

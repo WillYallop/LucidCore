@@ -8,3 +8,4 @@
 /// <reference path="./models/menu.d.ts" />
 /// <reference path="./models/content_types/config.d.ts" />
 /// <reference path="./models/content_types/database.d.ts" />
+/// <reference path="./schemas/page_component.d.ts" />

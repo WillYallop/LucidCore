@@ -1,5 +1,5 @@
-# Lucid - LucidCore
-> Still In Development
+# Lucid - LucidCore (moved!)
+> This project has been merged into the [Lucid](https://github.com/WillYallop/Lucid) repository and is no longer being worked on here!
 
 LucidCore is a dependency of Lucid, that controls the core functionality. It does everything from handling statically generating the site, to validation and optimising media. 
 
